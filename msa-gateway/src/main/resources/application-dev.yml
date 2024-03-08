@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    # 命名服务 & 配置服务
+    nacos:
+      server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+      discovery:
+        namespace: ${NAMESPACE:dev}
+        group: MSA-ACTION
+#      config:
+#        namespace: ${NAMESPACE:dev}
+#        group: GATEWAY-SAMPLE
+#        name:                 # 使用的 Nacos 配置集的 dataId，默认为 spring.application.name
+#        file-extension: yaml  # 配置文件格式
+
+    # 网关规则
+    gateway:
+      # 路由规则（包括ID、目的地URI、一组断言、一组Filter）
+      routes:
+        - id: web-auth-router
+          uri: lb://msa-web-auth                  # 使用动态路由
+          predicates:
+            - Path=/web/auth/**
+      # 通过服务注册与发现，动态创建路由，会自动为所有注册到注册中心的服务创建路由
+      discovery:
+        locator:
+          enabled: true                           # 是否开启动态路由，默认false
+          lower-case-service-id: true
+          url-expression: "'lb://' + serviceId"   # 路由的目标地址的表达式，默认为 "'lb://' + serviceId"
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug

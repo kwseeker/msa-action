@@ -13,8 +13,7 @@
     <module>msa-dependencies</module>
     <module>msa-gateway</module>
     <module>msa-framework</module>
-    <module>msa-web-auth</module>
-    <module>msa-srv-user</module>
+    <module>msa-service-user</module>
   </modules>
 
   <properties>

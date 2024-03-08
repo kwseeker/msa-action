@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: msa-service-user
+  profiles:
+    active: dev
+
+server:
+  port: 28100
+  servlet:
+    context-path: /user/auth

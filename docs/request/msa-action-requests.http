@@ -1,0 +1,12 @@
+###
+### 第一行：请求类型 请求地址
+### 第二行：请求头信息，多个请求头信息依次写下去(第三行、第四行……、第N行)
+### 第N+2行：请求体
+POST http://localhost:28100/user/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
