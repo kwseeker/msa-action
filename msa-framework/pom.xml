@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>top.kwseeker.msa.action</groupId>
+        <artifactId>msa-action</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <groupId>top.kwseeker.msa.action.framework</groupId>
+    <artifactId>msa-framework</artifactId>
+    <packaging>pom</packaging>
+
+    <name>msa-framework</name>
+    <description>组件包，比如基础模型组件、工具组件、框架组件、业务组件</description>
+
+    <modules>
+        <module>msa-common</module>
+    </modules>
+
+</project>
