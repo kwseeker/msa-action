@@ -12,7 +12,7 @@ import top.kwseeker.msa.action.user.types.common.UserErrorCodes;
 
 @Slf4j
 @RestController
-@RequestMapping
+@RequestMapping("/auth")
 public class AuthController {
 
     @PostMapping("/login")

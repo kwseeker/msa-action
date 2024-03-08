@@ -16,10 +16,12 @@ spring:
     gateway:
       # 路由规则（包括ID、目的地URI、一组断言、一组Filter）
       routes:
-        - id: web-auth-router
-          uri: lb://msa-web-auth                  # 使用动态路由
+        - id: service-user-router
+          uri: lb://msa-service-user              # 使用动态路由
           predicates:
-            - Path=/web/auth/**
+            - Path=/msa/user/**
+          filters:
+            - RewritePath=/msa/(?<remaining>.*), /${remaining}
       # 通过服务注册与发现，动态创建路由，会自动为所有注册到注册中心的服务创建路由
       discovery:
         locator:

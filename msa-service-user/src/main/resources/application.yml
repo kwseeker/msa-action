@@ -7,4 +7,4 @@ spring:
 server:
   port: 28100
   servlet:
-    context-path: /user/auth
+    context-path: /user

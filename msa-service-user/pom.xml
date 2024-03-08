@@ -11,7 +11,7 @@
     <artifactId>msa-service-user</artifactId>
     <packaging>jar</packaging>
 
-    <name>msa-web-auth</name>
+    <name>${artifactId}</name>
     <description>权限管理</description>
 
     <dependencies>
@@ -24,6 +24,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
         <dependency>

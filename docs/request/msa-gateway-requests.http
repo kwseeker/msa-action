@@ -1,0 +1,8 @@
+###
+POST http://localhost:28000/msa/user/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
