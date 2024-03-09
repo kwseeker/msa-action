@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.kwseeker.msa.action.user.domain.auth.entity.LoginRespEntity;
+import top.kwseeker.msa.action.user.domain.auth.model.entity.LoginRespEntity;
 import top.kwseeker.msa.action.framework.common.model.Response;
 import top.kwseeker.msa.action.user.trigger.http.dto.LoginDTO;
 import top.kwseeker.msa.action.user.types.common.UserErrorCodes;
