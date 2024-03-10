@@ -1,5 +1,6 @@
 package top.kwseeker.msa.action.user.infrastructure.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
@@ -8,7 +9,7 @@ import top.kwseeker.msa.action.user.types.enums.Sex;
 
 import java.time.LocalDateTime;
 
-@TableName(value = "ud_user")
+@TableName(value = "ud_user", autoResultMap = true)
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,7 +17,8 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 public class UserPO extends BasePO {
 
-    @TableId
+    //不配置type的话（相当于 IdType.NONE），insert之后无法从实例中直接读取主键值
+    @TableId(type = IdType.AUTO)
     private Long id;
     private String username;
     private String password;

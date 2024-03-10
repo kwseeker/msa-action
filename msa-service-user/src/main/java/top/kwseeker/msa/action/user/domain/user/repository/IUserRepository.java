@@ -4,7 +4,13 @@ import top.kwseeker.msa.action.user.domain.user.model.entity.UserEntity;
 
 public interface IUserRepository {
 
-    void insert(UserEntity userEntity);
+    /**
+     * 新增用户
+     * @return 新用户ID
+     */
+    Long insert(UserEntity userEntity);
+
+    UserEntity getUserById(Long uid);
 
     UserEntity getUserByUsername(String username);
 }

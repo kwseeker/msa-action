@@ -53,7 +53,7 @@ CREATE TABLE `ud_user`  (
     -- `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户编号',
     PRIMARY KEY (`id`) USING BTREE,
     -- UNIQUE INDEX `idx_username`(`username` ASC, `update_time` ASC, `tenant_id` ASC) USING BTREE
-    UNIQUE INDEX `idx_un_ut`(`username` ASC, `update_time` ASC) USING BTREE
+    UNIQUE INDEX `idx_username`(`username`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户信息表';
 
 # id: 1-999 预留给测试用户

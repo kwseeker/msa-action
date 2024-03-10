@@ -11,3 +11,24 @@ Content-Type: application/json
   "password": "admin"
 }
 
+###
+GET http://localhost:28100/user/manage/get?uid=11
+
+###
+GET http://localhost:28100/user/manage/getByName?username=kwseeker
+
+###
+PUT http://localhost:28100/user/manage/create
+Content-Type: application/json
+
+{
+  "username": "tester",
+  "password": "123456",
+  "nickname": "tester",
+  "remark": "测试用户",
+  "deptId": 1,
+  "email": "tester@example.com",
+  "mobile": "13722223333",
+  "sex": 2,
+  "avatar": "https://xxx"
+}

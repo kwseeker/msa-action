@@ -8,43 +8,32 @@ import top.kwseeker.msa.action.user.domain.user.repository.IUserRepository;
 import top.kwseeker.msa.action.user.infrastructure.converter.UserConverter;
 import top.kwseeker.msa.action.user.infrastructure.dao.UserMapper;
 import top.kwseeker.msa.action.user.infrastructure.po.UserPO;
+import top.kwseeker.msa.action.user.types.common.UserErrorCodes;
+import top.kwseeker.msa.action.user.types.exception.UserDomainException;
 
 @Slf4j
 @Repository
 public class UserRepository extends ServiceImpl<UserMapper, UserPO> implements IUserRepository {
 
     @Override
-    public void insert(UserEntity userEntity) {
-        //UserPO userPO = new UserPO();
-        //userPO.setUsername(userEntity.getUsername());
-        //userPO.setPassword(userEntity.getPassword());
-        //userPO.setNickname(userEntity.getNickname());
-        //userPO.setRemark(userEntity.getRemark());
-        //userPO.setDeptId(userEntity.getDeptId());
-        //userPO.setEmail(userEntity.getEmail());
-        //userPO.setMobile(userEntity.getMobile());
-        //userPO.setSex(userEntity.getSex());
-        //userPO.setAvatar(userEntity.getAvatar());
+    public Long insert(UserEntity userEntity) {
         UserPO userPO = UserConverter.INSTANCE.convert(userEntity);
-        int ret = getBaseMapper().insert(userPO);
-        log.info("添加新用户：ret={}", ret);
+        boolean ret = save(userPO);
+        if (!ret) {
+            throw new UserDomainException(UserErrorCodes.CREATE_USER_FAILED);
+        }
+        return userPO.getId();
+    }
+
+    @Override
+    public UserEntity getUserById(Long uid) {
+        UserPO userPO = getById(uid);
+        return UserConverter.INSTANCE.convert(userPO);
     }
 
     @Override
     public UserEntity getUserByUsername(String username) {
         UserPO userPO = getBaseMapper().selectByUsername(username);
         return UserConverter.INSTANCE.convert(userPO);
-        //UserEntity userEntity = new UserEntity();
-        //userEntity.setId(userPO.getId());
-        //userEntity.setUsername(userPO.getUsername());
-        //userEntity.setPassword(userPO.getPassword());
-        //userEntity.setNickname(userPO.getNickname());
-        //userEntity.setRemark(userPO.getRemark());
-        //userEntity.setDeptId(userPO.getDeptId());
-        //userEntity.setEmail(userPO.getEmail());
-        //userEntity.setMobile(userPO.getMobile());
-        //userEntity.setSex(userPO.getSex());
-        //userEntity.setAvatar(userPO.getAvatar());
-        //return userEntity;
     }
 }
