@@ -11,5 +11,7 @@ public interface UserErrorCodes {
     // 用户权限管理 20000-29999
 
     // 认证授权 30000-39999
+    ErrorCode CREATE_TOKEN_FAILED = new ErrorCode(30000, "生成TOKEN失败");
+    ErrorCode VERIFY_TOKEN_FAILED = new ErrorCode(30000, "校验TOKEN失败");
 
 }

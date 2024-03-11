@@ -21,6 +21,7 @@
         <!-- 工具 -->
         <lombok.version>1.18.26</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <java-jwt.version>4.4.0</java-jwt.version>
     </properties>
 
     <dependencyManagement>
@@ -68,6 +69,12 @@
             <!--    <artifactId>mysql-connector-java</artifactId>-->
             <!--    <version></version>-->
             <!--</dependency>-->
+            <!-- 认证授权 -->
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java-jwt.version}</version>
+            </dependency>
             <!-- 工具 -->
             <dependency>
                 <groupId>org.mapstruct</groupId>

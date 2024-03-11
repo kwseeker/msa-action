@@ -7,27 +7,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.kwseeker.msa.action.user.domain.auth.model.entity.LoginRespEntity;
 import top.kwseeker.msa.action.framework.common.model.Response;
+import top.kwseeker.msa.action.user.domain.auth.service.IAuthService;
 import top.kwseeker.msa.action.user.trigger.http.dto.LoginDTO;
-import top.kwseeker.msa.action.user.types.common.UserErrorCodes;
+
+import javax.annotation.Resource;
 
 @Slf4j
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
+    @Resource
+    private IAuthService authService;
+
     @PostMapping("/login")
     public Response<LoginRespEntity> login(@RequestBody LoginDTO loginDTO) {
-        String username = loginDTO.getUsername();
-        String password = loginDTO.getPassword();
-        if (("admin".equalsIgnoreCase(username) && "admin".equals(password)) ||
-                ("kwseeker".equalsIgnoreCase(username) && "123456".equals(password))) {
-            //登录成功
-            LoginRespEntity loginRespEntity = LoginRespEntity.builder()
-                    .userId(10000L)
-                    .accessToken("an-access-token")
-                    .build();
-            return Response.success(loginRespEntity);
-        }
-        return Response.fail(UserErrorCodes.INVALID_USERNAME_OR_PASSWORD);
+        LoginRespEntity loginResp = authService.login(loginDTO);
+        return Response.success(loginResp);
     }
 }
