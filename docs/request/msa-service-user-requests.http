@@ -1,8 +1,7 @@
 ###
-### 第一行：请求类型 请求地址
-### 第二行：请求头信息，多个请求头信息依次写下去(第三行、第四行……、第N行)
-### 第N+2行：请求体
 ### For more: https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html
+
+### POST /user/auth/login
 POST http://localhost:28100/user/auth/login
 Content-Type: application/json
 
@@ -20,6 +19,33 @@ GET http://localhost:28100/user/manage/getByName?username=kwseeker
 ###
 PUT http://localhost:28100/user/manage/create
 Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE3MTAyNDI3MzQsImRlcHRJZCI6MCwidXNlcklkIjoxLCJ1c2VybmFtZSI6ImFkbWluIn0.kJ9RkkBQUvDJ6DzlWkHfVrUJtPAnt6WDPNH3sq-XJqHN-oFjlChYkoSo0osA-bvPj16c4oce0nT2vryy4_F0CBMSly2DjV5bu7_6QzmDrY_it1wCY4eRlk90QtSJ66etHHvMuMs6HtrLFgYaF--7fSJMoxkBm3RWpgGUQLXBheiqOC_CBCseRz7so5ARl8RlCjcRT6hIcrje6Pm_mQ0Azt8awDv4Vpn33ZmEG3OEV83YEjwMIP8KF1IwCPm41r5xEudKrW1BAUAzHTXF7i8guNJuwrW4agv9tzDHDLf7leCfzke9OJBMlvxzzWeRxotQ-tNR5fhHs7UlS1W-5rOWOQ
+
+{
+  "username": "tester",
+  "password": "123456",
+  "nickname": "tester",
+  "remark": "测试用户",
+  "deptId": 1,
+  "email": "tester@example.com",
+  "mobile": "13722223333",
+  "sex": 2,
+  "avatar": "https://xxx"
+}
+
+###
+POST http://localhost:28100/user/auth/login
+Content-Type: application/json
+
+{
+"username": "kwseeker",
+"password": "123456"
+}
+
+###
+PUT http://localhost:28100/user/manage/create
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE3MTAyNDk0NDcsImRlcHRJZCI6MSwidXNlcklkIjoxMSwidXNlcm5hbWUiOiJrd3NlZWtlciJ9.CUV3aS8nUnesVmvxjOEanJUCxPZpnb448c6bJDjXcNnvRYHb6vy_K5NBQuv3i25NC6KW3_pzfn1s6y2wgual3WalXm8U34pcUiCp-hDfv2ikCzoBg2b84io8sJndildKAfx4BMtyn6VQnDwbA0N27JZv1hswm3BYZOQJlXHLTxOHd4CaC28wMd63B9_0JA8HI3t968EBDrFKyQLaoWXVoxvz1nbDYbOgrxlkMQFVfSEGVg_ZAR69Y10YtlJkiFuPAT6xYjvCnuR4371Cu3YtECCjgkp0pJroflf46-6uC2HyqRzdWSepWh2Cz3zWO0zKG8brQ541LCYDy7ZsHmPKxw
 
 {
   "username": "tester",

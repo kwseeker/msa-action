@@ -1,5 +1,6 @@
 package top.kwseeker.msa.action.user.domain.auth.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.kwseeker.msa.action.user.domain.auth.model.entity.LoginRespEntity;
 import top.kwseeker.msa.action.user.domain.auth.service.token.ITokenService;
@@ -11,6 +12,7 @@ import top.kwseeker.msa.action.user.types.exception.UserDomainException;
 
 import javax.annotation.Resource;
 
+@Slf4j
 @Service
 public class AuthService implements IAuthService {
 
@@ -33,6 +35,9 @@ public class AuthService implements IAuthService {
 
         //发放令牌
         String token = tokenService.createToken(userEntity);
+        log.info("login token: {}", token);
+
+        //记录登录信息 TODO
 
         return LoginRespEntity.builder()
                 .userId(userEntity.getId())

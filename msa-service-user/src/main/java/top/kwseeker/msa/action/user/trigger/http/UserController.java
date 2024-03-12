@@ -1,6 +1,7 @@
 package top.kwseeker.msa.action.user.trigger.http;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.kwseeker.msa.action.framework.common.model.Response;
 import top.kwseeker.msa.action.user.domain.user.model.entity.UserEntity;
@@ -30,6 +31,7 @@ public class UserController {
     }
 
     @PutMapping("/create")
+    @PreAuthorize("@as.hasPermission('system:user:create')")
     public Response<Long> createUser(@RequestBody UserCreateDTO userCreateDTO) {
         Long userId = userService.createUser(userCreateDTO);
         return Response.success(userId);

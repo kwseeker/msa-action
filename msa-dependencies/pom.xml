@@ -6,7 +6,7 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>基础BOM文件，管理整个项目依赖的版本</description>
 
     <properties>
@@ -22,10 +22,23 @@
         <lombok.version>1.18.26</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <java-jwt.version>4.4.0</java-jwt.version>
+        <hutool-all.version>5.8.20</hutool-all.version>
+        <guava.version>32.0.1-jre</guava.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>top.kwseeker.msa.action.framework.common</groupId>
+                <artifactId>msa-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>top.kwseeker.msa.action.security</groupId>
+                <artifactId>msa-security-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <!-- Spring Boot & Cloud -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -80,6 +93,16 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

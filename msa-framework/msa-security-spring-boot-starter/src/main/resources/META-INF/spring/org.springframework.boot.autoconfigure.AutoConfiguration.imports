@@ -1,0 +1,2 @@
+top.kwseeker.msa.action.security.config.MsaSecurityAutoConfiguration
+top.kwseeker.msa.action.security.config.MsaWebSecurityConfigurerAdapter

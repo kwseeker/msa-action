@@ -18,7 +18,15 @@
         <dependency>
             <groupId>top.kwseeker.msa.action.framework.common</groupId>
             <artifactId>msa-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>top.kwseeker.msa.action.user</groupId>
+            <artifactId>msa-service-user-api</artifactId>
             <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.kwseeker.msa.action.security</groupId>
+            <artifactId>msa-security-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -63,7 +71,6 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.20</version>
         </dependency>
     </dependencies>
 

@@ -11,6 +11,7 @@ import top.kwseeker.msa.action.user.domain.auth.service.IAuthService;
 import top.kwseeker.msa.action.user.trigger.http.dto.LoginDTO;
 
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 
 @Slf4j
 @RestController
@@ -20,6 +21,7 @@ public class AuthController {
     @Resource
     private IAuthService authService;
 
+    @PermitAll
     @PostMapping("/login")
     public Response<LoginRespEntity> login(@RequestBody LoginDTO loginDTO) {
         LoginRespEntity loginResp = authService.login(loginDTO);
