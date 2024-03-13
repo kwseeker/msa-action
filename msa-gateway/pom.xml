@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>top.kwseeker.msa.action</groupId>
+        <groupId>top.kwseeker.msa</groupId>
         <artifactId>msa-action</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <groupId>top.kwseeker.msa.action.gateway</groupId>
+    <groupId>top.kwseeker.msa</groupId>
     <artifactId>msa-gateway</artifactId>
     <packaging>jar</packaging>
 

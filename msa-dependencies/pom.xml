@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>top.kwseeker.msa.action</groupId>
+    <groupId>top.kwseeker.msa</groupId>
     <artifactId>msa-dependencies</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
@@ -29,12 +29,12 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>top.kwseeker.msa.action.framework.common</groupId>
+                <groupId>top.kwseeker.msa</groupId>
                 <artifactId>msa-common</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>top.kwseeker.msa.action.security</groupId>
+                <groupId>top.kwseeker.msa</groupId>
                 <artifactId>msa-security-spring-boot-starter</artifactId>
                 <version>${revision}</version>
             </dependency>

@@ -2,76 +2,88 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>top.kwseeker.msa.action</groupId>
+        <groupId>top.kwseeker.msa</groupId>
         <artifactId>msa-action</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <groupId>top.kwseeker.msa.action.user</groupId>
     <artifactId>msa-service-user</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
-    <name>${artifactId}</name>
-    <description>权限管理</description>
+    <name>${project.artifactId}</name>
+    <description>用户中心，包括用户管理、认证授权、权限管理</description>
+
+    <!--<properties>-->
+    <!--    <revision>0.0.1</revision>-->
+    <!--</properties>-->
+
+    <modules>
+        <module>msa-service-user-api</module>
+        <module>msa-service-user-app</module>
+        <module>msa-service-user-types</module>
+        <module>msa-service-user-domain</module>
+        <module>msa-service-user-trigger</module>
+        <module>msa-service-user-infrastructure</module>
+    </modules>
 
     <dependencies>
-        <dependency>
-            <groupId>top.kwseeker.msa.action.framework.common</groupId>
-            <artifactId>msa-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>top.kwseeker.msa.action.user</groupId>
-            <artifactId>msa-service-user-api</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>top.kwseeker.msa.action.security</groupId>
-            <artifactId>msa-security-spring-boot-starter</artifactId>
-        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>top.kwseeker.msa.action.framework.common</groupId>-->
+        <!--    <artifactId>msa-common</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>top.kwseeker.msa.action.user</groupId>-->
+        <!--    <artifactId>msa-service-user-api</artifactId>-->
+        <!--    <version>${revision}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>top.kwseeker.msa.action.security</groupId>-->
+        <!--    <artifactId>msa-security-spring-boot-starter</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.boot</groupId>-->
+        <!--    <artifactId>spring-boot-starter-web</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>com.alibaba.cloud</groupId>-->
+        <!--    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>com.baomidou</groupId>-->
+        <!--    <artifactId>mybatis-plus-boot-starter</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>com.baomidou</groupId>-->
+        <!--    <artifactId>mybatis-plus-boot-starter-test</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>com.alibaba</groupId>-->
+        <!--    <artifactId>druid-spring-boot-starter</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>com.mysql</groupId>-->
+        <!--    <artifactId>mysql-connector-j</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>com.auth0</groupId>-->
+        <!--    <artifactId>java-jwt</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>org.mapstruct</groupId>-->
+        <!--    <artifactId>mapstruct</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>org.projectlombok</groupId>-->
+        <!--    <artifactId>lombok</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>cn.hutool</groupId>-->
+        <!--    <artifactId>hutool-all</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
