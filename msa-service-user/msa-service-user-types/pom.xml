@@ -15,12 +15,6 @@
     <dependencies>
         <dependency>
             <groupId>top.kwseeker.msa</groupId>
-            <artifactId>msa-service-user-api</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>top.kwseeker.msa</groupId>
             <artifactId>msa-common</artifactId>
         </dependency>
 
