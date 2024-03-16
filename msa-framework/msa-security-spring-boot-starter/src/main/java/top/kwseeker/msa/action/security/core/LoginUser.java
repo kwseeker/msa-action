@@ -14,6 +14,7 @@ import java.util.Map;
 public class LoginUser {
 
     private Long id;
+    private String username;
     //private Integer userType;
     //private Long tenantId;
     /**

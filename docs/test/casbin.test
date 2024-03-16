@@ -1,0 +1,8 @@
+g, kwseeker, common
+g, kwseeker, test
+p, super_admin, /user/*, (system:user:list|system:user:query|system:user:create)
+p, common, /user/*, (system:user:list|system:user:query)
+
+kwseeker, /user/manage/create, system:user:create
+admin, /user/manage/create, (system:user:create)
+admin, /user/manage/create, system:user:create

@@ -1,5 +1,7 @@
 package top.kwseeker.msa.action.user.api;
 
+import top.kwseeker.msa.action.user.api.model.PermissionVerifyDTO;
+
 /**
  * 权限检查服务
  */
@@ -24,9 +26,5 @@ public interface IPermissionAPI {
      */
     boolean hasAnyRoles(Long userId, String... roles);
 
-    //Set<Long> getUserRoleIdListByUserIdFromCache(Long userId);
-    //
-    //Set<Long> getUserRoleIdListByUserId(Long userId);
-    //
-    //Set<Long> getMenuRoleIdListByMenuIdFromCache(Long menuId);
+    boolean verify(PermissionVerifyDTO permissionVerifyDTO);
 }

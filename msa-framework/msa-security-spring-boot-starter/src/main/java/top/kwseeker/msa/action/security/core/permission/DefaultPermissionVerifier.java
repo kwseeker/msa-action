@@ -1,4 +1,4 @@
-package top.kwseeker.msa.action.security.core.authorization;
+package top.kwseeker.msa.action.security.core.permission;
 
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.cache.CacheLoader;
@@ -8,8 +8,10 @@ import lombok.SneakyThrows;
 import top.kwseeker.msa.action.framework.common.core.KeyValue;
 import top.kwseeker.msa.action.framework.common.util.CacheUtil;
 import top.kwseeker.msa.action.security.core.LoginUser;
+import top.kwseeker.msa.action.security.core.RequestInfo;
 import top.kwseeker.msa.action.security.core.util.SecurityFrameworkUtil;
 import top.kwseeker.msa.action.user.api.IPermissionAPI;
+import top.kwseeker.msa.action.user.api.model.PermissionVerifyDTO;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -19,7 +21,7 @@ import java.util.List;
  * 自定义鉴权服务
  */
 @AllArgsConstructor
-public class AuthorizationService implements IAuthorizationService {
+public class DefaultPermissionVerifier implements IPermissionVerifier {
 
     private IPermissionAPI permissionService;
 
@@ -82,5 +84,22 @@ public class AuthorizationService implements IAuthorizationService {
             return false;
         }
         return CollUtil.containsAny(user.getScopes(), Arrays.asList(scope));
+    }
+
+    @Override
+    public boolean verifyPerms(String... permissions) {
+        RequestInfo requestInfo = SecurityFrameworkUtil.getRequestInfo();
+        if (requestInfo == null || requestInfo.getLoginUser() == null) {
+            return false;
+        }
+
+        LoginUser loginUser = requestInfo.getLoginUser();
+        PermissionVerifyDTO permissionVerifyDTO = PermissionVerifyDTO.builder()
+                .userId(loginUser.getId())
+                .sub(loginUser.getUsername())    //用户username
+                .obj(requestInfo.getRequestDetails().getUri()) //请求路径
+                .acts(permissions)
+                .build();
+        return permissionService.verify(permissionVerifyDTO);
     }
 }

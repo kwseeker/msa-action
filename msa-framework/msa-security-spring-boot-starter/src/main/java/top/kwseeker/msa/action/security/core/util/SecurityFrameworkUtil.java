@@ -4,9 +4,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.util.StringUtils;
+import top.kwseeker.msa.action.security.core.authentication.MsaWebAuthenticationDetails;
 import top.kwseeker.msa.action.security.core.LoginUser;
+import top.kwseeker.msa.action.security.core.RequestInfo;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +56,7 @@ public class SecurityFrameworkUtil {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginUser, null, Collections.emptyList());
         //TODO
-        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        authenticationToken.setDetails(new MsaWebAuthenticationDetails(request));
         return authenticationToken;
     }
 
@@ -84,6 +86,22 @@ public class SecurityFrameworkUtil {
             return null;
         }
         return authentication.getPrincipal() instanceof LoginUser ? (LoginUser) authentication.getPrincipal() : null;
+    }
+
+    @Nullable
+    public static RequestInfo getRequestInfo() {
+        Authentication authentication = getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+        LoginUser loginUser = authentication.getPrincipal() instanceof LoginUser ?
+                (LoginUser) authentication.getPrincipal() : null;
+        MsaWebAuthenticationDetails details = authentication.getDetails() instanceof MsaWebAuthenticationDetails ?
+                (MsaWebAuthenticationDetails) authentication.getDetails() : null;
+        return RequestInfo.builder()
+                .loginUser(loginUser)
+                .requestDetails(details)
+                .build();
     }
 
     /**

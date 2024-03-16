@@ -33,7 +33,8 @@ public class UserController {
     }
 
     @PutMapping("/create")
-    @PreAuthorize("@as.hasPermission('system:user:create')")
+    //@PreAuthorize("@pv.hasPermission('system:user:create')")
+    @PreAuthorize("@pv.verifyPerms('system:user:create')")
     public Response<Long> createUser(@RequestBody UserCreateDTO userCreateDTO) {
         UserCreateVO userCreateVO = Converter.INSTANCE.convert(userCreateDTO);
         Long userId = userService.createUser(userCreateVO);

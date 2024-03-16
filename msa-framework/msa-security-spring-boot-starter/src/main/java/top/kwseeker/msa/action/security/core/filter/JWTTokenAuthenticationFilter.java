@@ -34,7 +34,7 @@ public class JWTTokenAuthenticationFilter extends OncePerRequestFilter implement
      * 解析请求头 Login-User Authorization,
      * Login-User 存在说明前面的微服务已经做过Token校验了，这里直接解析下放到请求上下文即可；
      * Login-User 不存在 Authorization 存在，说明需要对Token校验
-     * 都不存在，可能是不需要认证的请求
+     * 都不存在，因为请求的可能是不需要认证的路由所以也放行
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -84,6 +84,7 @@ public class JWTTokenAuthenticationFilter extends OncePerRequestFilter implement
             // 构建登录用户
             return LoginUser.builder()
                     .id(tokenVerifiedDTO.getUserId())
+                    .username(tokenVerifiedDTO.getUsername())
                     //.userType(tokenPO.getUserType())
                     .scopes(tokenVerifiedDTO.getScopes())
                     .build();

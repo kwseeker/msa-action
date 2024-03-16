@@ -20,6 +20,7 @@ public class TokenAPI implements ITokenAPI {
         TokenVerifiedVO tokenVerifiedVO = tokenService.verifyToken(token);
         return TokenVerifiedDTO.builder()
                 .userId(tokenVerifiedVO.getUserId())
+                .username(tokenVerifiedVO.getUsername())
                 .scopes(Collections.emptyList())    //TODO
                 .build();
     }

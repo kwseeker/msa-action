@@ -10,6 +10,7 @@ import java.util.List;
 public class TokenVerifiedDTO {
 
     private Long userId;
+    private String username;
     /**
      * 授权范围
      */

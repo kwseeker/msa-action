@@ -1,9 +1,9 @@
-package top.kwseeker.msa.action.security.core.authorization;
+package top.kwseeker.msa.action.security.core.permission;
 
 /**
  * 自定义方法权限校验服务（授权服务），用于在 @PreAuthorize 中实现更复杂的权限校验
  */
-public interface IAuthorizationService {
+public interface IPermissionVerifier {
 
     /**
      * 判断是否有权限
@@ -54,4 +54,6 @@ public interface IAuthorizationService {
      * @return 是否
      */
     boolean hasAnyScopes(String... scope);
+
+    boolean verifyPerms(String... permissions);
 }

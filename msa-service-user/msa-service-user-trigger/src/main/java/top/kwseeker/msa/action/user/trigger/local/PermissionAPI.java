@@ -3,7 +3,10 @@ package top.kwseeker.msa.action.user.trigger.local;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.kwseeker.msa.action.user.api.IPermissionAPI;
+import top.kwseeker.msa.action.user.api.model.PermissionVerifyDTO;
+import top.kwseeker.msa.action.user.domain.permission.model.entity.PermissionVerifyEntity;
 import top.kwseeker.msa.action.user.domain.permission.service.IPermissionService;
+import top.kwseeker.msa.action.user.trigger.http.model.dto.converter.Converter;
 
 import javax.annotation.Resource;
 import java.util.Set;
@@ -37,5 +40,11 @@ public class PermissionAPI implements IPermissionAPI {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean verify(PermissionVerifyDTO permissionVerifyDTO) {
+        PermissionVerifyEntity entity = Converter.INSTANCE.convert(permissionVerifyDTO);
+        return permissionService.verifyPermission(entity);
     }
 }

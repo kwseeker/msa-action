@@ -29,7 +29,7 @@ public class JWTTokenService implements ITokenService {
         DecodedJWT decodedJWT = JWTUtil.verifyJWT(token);
         return TokenVerifiedVO.builder()
                 .userId(decodedJWT.getClaims().get("userId").asLong())
-                //.userId(decodedJWT.getClaims().get("username").asLong())
+                .username(decodedJWT.getClaims().get("username").asString())
                 //.userId(decodedJWT.getClaims().get("deptId").asLong())
                 .build();
     }

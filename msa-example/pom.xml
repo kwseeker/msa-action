@@ -7,15 +7,9 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>msa-framework</artifactId>
-    <packaging>pom</packaging>
-
+    <artifactId>msa-example</artifactId>
+    <packaging>jar</packaging>
     <name>${project.artifactId}</name>
-    <description>组件包，比如基础模型组件、工具组件、框架组件、业务组件</description>
-
-    <modules>
-        <module>msa-common</module>
-        <module>msa-security-spring-boot-starter</module>
-    </modules>
+    <description>测试类工程</description>
 
 </project>

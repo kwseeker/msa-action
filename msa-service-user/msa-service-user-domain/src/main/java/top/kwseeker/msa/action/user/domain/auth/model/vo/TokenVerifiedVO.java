@@ -11,5 +11,5 @@ import lombok.Data;
 public class TokenVerifiedVO {
 
     private Long userId;
-
+    private String username;
 }
