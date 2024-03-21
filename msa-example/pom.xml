@@ -8,8 +8,11 @@
     </parent>
 
     <artifactId>msa-example</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>测试类工程</description>
 
+    <modules>
+        <module>msa-kafka-example</module>
+    </modules>
 </project>
