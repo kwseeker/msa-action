@@ -11,10 +11,11 @@
 
   <modules>
     <module>msa-dependencies</module>
+    <module>msa-example</module>
     <module>msa-framework</module>
     <module>msa-gateway</module>
+    <module>msa-service-mall</module>
     <module>msa-service-user</module>
-    <module>msa-example</module>
   </modules>
 
   <properties>

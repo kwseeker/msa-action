@@ -20,13 +20,18 @@
         <jcasbin-redis-watcher.version>1.4.1</jcasbin-redis-watcher.version>
         <!-- 数据库访问 -->
         <mybatis-plus.starter.version>3.5.3</mybatis-plus.starter.version>
+        <mybatis-plus.version>3.5.3</mybatis-plus.version>
         <druid.starter.version>1.2.16</druid.starter.version>
+        <!-- 消息队列 -->
+        <spring-kafka.version>2.8.0</spring-kafka.version>
         <!-- 工具 -->
         <lombok.version>1.18.26</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <java-jwt.version>4.4.0</java-jwt.version>
         <hutool-all.version>5.8.20</hutool-all.version>
         <guava.version>32.0.1-jre</guava.version>
+        <commons-lang3.version>3.14.0</commons-lang3.version>
+        <fastjson.version>2.0.41</fastjson.version>
     </properties>
 
     <dependencyManagement>
@@ -80,6 +85,16 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.starter.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
             <!--<dependency>-->
             <!--    <groupId>mysql</groupId>-->
             <!--    <artifactId>mysql-connector-java</artifactId>-->
@@ -101,6 +116,12 @@
                 <artifactId>jcasbin-redis-watcher</artifactId>
                 <version>${jcasbin-redis-watcher.version}</version>
             </dependency>
+            <!-- 消息队列 -->
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${spring-kafka.version}</version>
+            </dependency>
             <!-- 工具 -->
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -116,6 +137,16 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

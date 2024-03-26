@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.kwseeker.msa.action.user.api.local.ITokenAPI;
+import top.kwseeker.msa.action.user.api.model.TokenVerifiedDTO;
 import top.kwseeker.msa.action.user.domain.auth.model.entity.LoginRespEntity;
 import top.kwseeker.msa.action.framework.common.model.Response;
 import top.kwseeker.msa.action.user.domain.auth.model.vo.LoginReqVO;
@@ -22,6 +24,8 @@ public class AuthController {
 
     @Resource
     private IAuthService authService;
+    @Resource
+    private ITokenAPI tokenAPI;
 
     @PermitAll
     @PostMapping("/login")
@@ -29,5 +33,12 @@ public class AuthController {
         LoginReqVO loginReqVO = Converter.INSTANCE.convert(loginDTO);
         LoginRespEntity loginResp = authService.login(loginReqVO);
         return Response.success(loginResp);
+    }
+
+    @PermitAll
+    @PostMapping("/token/verify")
+    public Response<TokenVerifiedDTO> verifyToken(String token) {
+        TokenVerifiedDTO tokenVerifiedDTO = tokenAPI.verifyToken(token);
+        return Response.success(tokenVerifiedDTO);
     }
 }

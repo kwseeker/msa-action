@@ -1,4 +1,4 @@
-package top.kwseeker.msa.action.user.api;
+package top.kwseeker.msa.action.user.api.local;
 
 import top.kwseeker.msa.action.user.api.model.TokenVerifiedDTO;
 

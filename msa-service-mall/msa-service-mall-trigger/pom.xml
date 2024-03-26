@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>top.kwseeker.msa</groupId>
+        <artifactId>msa-service-mall</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <artifactId>msa-service-mall-trigger</artifactId>
+    <packaging>jar</packaging>
+
+    <name>msa-service-mall-trigger</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>top.kwseeker.msa</groupId>
+            <artifactId>msa-service-mall-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.kwseeker.msa</groupId>
+            <artifactId>msa-service-mall-types</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.kwseeker.msa</groupId>
+            <artifactId>msa-service-mall-domain</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.kwseeker.msa</groupId>
+            <artifactId>msa-security-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+    </dependencies>
+</project>

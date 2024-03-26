@@ -4,10 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
+import top.kwseeker.msa.action.framework.common.model.Response;
 import top.kwseeker.msa.action.security.config.MsaSecurityProperties;
 import top.kwseeker.msa.action.security.core.LoginUser;
 import top.kwseeker.msa.action.security.core.util.SecurityFrameworkUtil;
-import top.kwseeker.msa.action.user.api.ITokenAPI;
+import top.kwseeker.msa.action.user.api.feign.TokenAPIClient;
+import top.kwseeker.msa.action.user.api.local.ITokenAPI;
 import top.kwseeker.msa.action.user.api.model.TokenVerifiedDTO;
 
 import javax.servlet.FilterChain;
@@ -23,11 +25,19 @@ import java.io.IOException;
 public class JWTTokenAuthenticationFilter extends OncePerRequestFilter implements TokenAuthenticationFilter {
 
     private final MsaSecurityProperties msaSecurityProperties;
-    private final ITokenAPI tokenAPI;
+    //用于本地调用
+    private ITokenAPI tokenAPI;
+    //用于远程调用
+    private TokenAPIClient tokenAPIClient;
 
     public JWTTokenAuthenticationFilter(MsaSecurityProperties msaSecurityProperties, ITokenAPI tokenAPI) {
         this.msaSecurityProperties = msaSecurityProperties;
         this.tokenAPI = tokenAPI;
+    }
+
+    public JWTTokenAuthenticationFilter(MsaSecurityProperties msaSecurityProperties, TokenAPIClient tokenAPIClient) {
+        this.msaSecurityProperties = msaSecurityProperties;
+        this.tokenAPIClient = tokenAPIClient;
     }
 
     /**
@@ -75,7 +85,13 @@ public class JWTTokenAuthenticationFilter extends OncePerRequestFilter implement
     private LoginUser buildLoginUserByToken(String token) {
         try {
             // 校验访问令牌
-            TokenVerifiedDTO tokenVerifiedDTO = tokenAPI.verifyToken(token);
+            TokenVerifiedDTO tokenVerifiedDTO;
+            if (tokenAPI != null) {
+                tokenVerifiedDTO = tokenAPI.verifyToken(token);
+            } else {
+                Response<TokenVerifiedDTO> response = tokenAPIClient.verifyToken(token);
+                tokenVerifiedDTO = response.getData();
+            }
 
             // 用户类型不匹配，无权限
             //if (ObjectUtil.notEqual(accessToken.getUserType(), userType)) {

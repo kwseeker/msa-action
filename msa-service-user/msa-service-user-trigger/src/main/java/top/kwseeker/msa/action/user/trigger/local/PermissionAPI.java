@@ -2,7 +2,7 @@ package top.kwseeker.msa.action.user.trigger.local;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import top.kwseeker.msa.action.user.api.IPermissionAPI;
+import top.kwseeker.msa.action.user.api.local.IPermissionAPI;
 import top.kwseeker.msa.action.user.api.model.PermissionVerifyDTO;
 import top.kwseeker.msa.action.user.domain.permission.model.entity.PermissionVerifyEntity;
 import top.kwseeker.msa.action.user.domain.permission.service.IPermissionService;

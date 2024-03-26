@@ -10,7 +10,8 @@ import top.kwseeker.msa.action.framework.common.util.CacheUtil;
 import top.kwseeker.msa.action.security.core.LoginUser;
 import top.kwseeker.msa.action.security.core.RequestInfo;
 import top.kwseeker.msa.action.security.core.util.SecurityFrameworkUtil;
-import top.kwseeker.msa.action.user.api.IPermissionAPI;
+import top.kwseeker.msa.action.user.api.feign.PermissionAPIClient;
+import top.kwseeker.msa.action.user.api.local.IPermissionAPI;
 import top.kwseeker.msa.action.user.api.model.PermissionVerifyDTO;
 
 import java.time.Duration;
@@ -24,6 +25,7 @@ import java.util.List;
 public class DefaultPermissionVerifier implements IPermissionVerifier {
 
     private IPermissionAPI permissionService;
+    private PermissionAPIClient permissionAPIClient;    //TODO
 
     /**
      * 针对 {@link #hasAnyRoles(String...)} 的缓存

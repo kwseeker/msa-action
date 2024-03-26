@@ -24,12 +24,9 @@ import org.springframework.web.servlet.mvc.condition.PathPatternsRequestConditio
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import top.kwseeker.msa.action.framework.common.core.TokenType;
-import top.kwseeker.msa.action.security.core.filter.JWTTokenAuthenticationFilter;
-import top.kwseeker.msa.action.security.core.filter.OAuth2TokenAuthenticationFilter;
+import top.kwseeker.msa.action.security.core.filter.TokenAuthenticationFilter;
 import top.kwseeker.msa.action.security.core.handler.exception.UnauthorizedResponseAuthenticationEntryPoint;
 import top.kwseeker.msa.action.security.core.handler.exception.ForbiddenResponseAccessDeniedHandler;
-import top.kwseeker.msa.action.user.api.ITokenAPI;
 
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
@@ -51,7 +48,7 @@ public class MsaWebSecurityConfigurerAdapter {  //旧版本是通过 WebSecurity
     @Resource
     private MsaSecurityProperties msaSecurityProperties;
     @Resource
-    private ITokenAPI tokenAPI;
+    private TokenAuthenticationFilter tokenAuthenticationFilter;
 
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
@@ -61,17 +58,6 @@ public class MsaWebSecurityConfigurerAdapter {  //旧版本是通过 WebSecurity
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new ForbiddenResponseAccessDeniedHandler();
-    }
-
-    @Bean
-    public Filter tokenAuthenticationFilter() {
-        if (TokenType.JWT == msaSecurityProperties.getTokenType()) {
-            return new JWTTokenAuthenticationFilter(msaSecurityProperties, tokenAPI);
-        } else if (TokenType.OAuth2 == msaSecurityProperties.getTokenType()) {
-            return new OAuth2TokenAuthenticationFilter();
-        } else {
-            throw new RuntimeException("Unknown token type: " + msaSecurityProperties.getTokenType());
-        }
     }
 
     @Bean
@@ -154,7 +140,7 @@ public class MsaWebSecurityConfigurerAdapter {  //旧版本是通过 WebSecurity
 
         // 在 UsernamePasswordAuthenticationFilter 前面添加 Token Filter
         // TODO tokenAuthenticationFilter 认证成功后会跳过 UsernamePasswordAuthenticationFilter 么？
-        httpSecurity.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore((Filter) tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
