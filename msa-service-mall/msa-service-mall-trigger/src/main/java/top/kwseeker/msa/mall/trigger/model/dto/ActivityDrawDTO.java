@@ -10,5 +10,5 @@ import lombok.Data;
 @Builder
 public class ActivityDrawDTO {
 
-    private Long activityId;
+    private Integer activityId;
 }
