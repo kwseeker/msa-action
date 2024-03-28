@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class ActivityDrawEntity {
 
     Long userId;
-    Long activityId;
+    Integer activityId;
 }

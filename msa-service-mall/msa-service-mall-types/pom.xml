@@ -4,16 +4,12 @@
     <parent>
         <groupId>top.kwseeker.msa</groupId>
         <artifactId>msa-service-mall</artifactId>
-        <version>0.0.1</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>msa-service-mall-types</artifactId>
     <packaging>jar</packaging>
     <name>msa-service-mall-types</name>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
         <dependency>

@@ -7,11 +7,10 @@
         <version>${revision}</version>
     </parent>
 
-    <groupId>top.kwseeker.msa</groupId>
     <artifactId>msa-gateway</artifactId>
     <packaging>jar</packaging>
 
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>网关服务</description>
 
     <dependencies>
