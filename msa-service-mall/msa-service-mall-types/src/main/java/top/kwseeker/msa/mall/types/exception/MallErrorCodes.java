@@ -1,4 +1,4 @@
-package top.kwseeker.msa.action.mall.types.exception;
+package top.kwseeker.msa.mall.types.exception;
 
 import top.kwseeker.msa.action.framework.common.exception.ErrorCode;
 

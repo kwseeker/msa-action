@@ -1,7 +1,9 @@
 package top.kwseeker.msa.mall.domain.activity.service;
 
+import top.kwseeker.msa.mall.domain.activity.model.entity.ActivityDeliveryItemEntity;
 import top.kwseeker.msa.mall.domain.activity.model.entity.ActivityDrawEntity;
 import top.kwseeker.msa.mall.domain.activity.model.entity.ActivitySetEntity;
+import top.kwseeker.msa.mall.domain.activity.model.entity.ActivitySyncStockEntity;
 import top.kwseeker.msa.mall.domain.activity.model.vo.ActivityDrawResultVO;
 
 public interface IActivityService {
@@ -15,4 +17,8 @@ public interface IActivityService {
      * 模拟活动设置
      */
     Integer setActivity(ActivitySetEntity activitySetEntity);
+
+    void updateActivityStockAndAddActivityPartakeRecord(ActivitySyncStockEntity activitySyncStockEntity);
+
+    void deliveryItem(ActivityDeliveryItemEntity activityDeliveryItemEntity);
 }

@@ -1,10 +1,8 @@
 package top.kwseeker.msa.mybatis.core.handler.field;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.stereotype.Component;
-import top.kwseeker.msa.mybatis.core.po.BasePO;
+import top.kwseeker.msa.mybatis.core.po.TimeBasePO;
 
 import java.time.LocalDateTime;
 
@@ -12,8 +10,6 @@ import java.time.LocalDateTime;
  * 通用字段（所有表都包含的一些公用字段）填充处理器
  * 详细参考: <a href="https://baomidou.com/pages/4c6bcf/">自动填充功能</a>
  */
-@Slf4j
-@Component
 public class CommonFieldsFillHandler implements MetaObjectHandler {
 
     /**
@@ -25,17 +21,17 @@ public class CommonFieldsFillHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        if (metaObject == null || !(metaObject.getOriginalObject() instanceof BasePO)) {
+        if (metaObject == null || !(metaObject.getOriginalObject() instanceof TimeBasePO)) {
             return;
         }
         //creator还是通过传参传吧，也可以使用ThreadLocal但是小心异步执行器
         LocalDateTime current = LocalDateTime.now();
-        BasePO basePO = (BasePO) metaObject.getOriginalObject();
-        if (basePO.getCreateTime() == null) {
-            basePO.setCreateTime(current);
+        TimeBasePO timeBasePO = (TimeBasePO) metaObject.getOriginalObject();
+        if (timeBasePO.getCreateTime() == null) {
+            timeBasePO.setCreateTime(current);
         }
-        if (basePO.getUpdateTime() == null) {
-            basePO.setUpdateTime(current);
+        if (timeBasePO.getUpdateTime() == null) {
+            timeBasePO.setUpdateTime(current);
         }
     }
 

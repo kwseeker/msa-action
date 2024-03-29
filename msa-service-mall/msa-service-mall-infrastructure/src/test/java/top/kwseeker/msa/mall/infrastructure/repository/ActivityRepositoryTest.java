@@ -5,14 +5,17 @@ import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import top.kwseeker.msa.mall.domain.activity.model.entity.ActivitySetEntity;
 import top.kwseeker.msa.mall.infrastructure.dao.MockApplication;
 
 import javax.annotation.Resource;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.CountDownLatch;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static top.kwseeker.msa.mall.infrastructure.repository.ActivityRepository.SettingKeyPrefix;
 
 @SpringBootTest(classes = MockApplication.class)
 @ContextConfiguration(classes = {RedisClientConfig.class})
@@ -27,6 +30,22 @@ class ActivityRepositoryTest {
 
     @Resource
     private RedissonClient redissonClient;
+
+    @Test
+    public void testSetObjectValue() {
+        String key = SettingKeyPrefix + "-1";
+        String key2 = SettingKeyPrefix + "0";
+        ActivitySetEntity object = redissonClient.<ActivitySetEntity>getBucket(key).get();
+        ActivitySetEntity nullObject = redissonClient.<ActivitySetEntity>getBucket(key2).get();
+        ActivitySetEntity activitySetEntity = ActivitySetEntity.builder()
+                .activityId(-1)
+                .name("测试-1")
+                .itemId(1)
+                .stock(100)
+                .build();
+        redissonClient.getBucket(key).set(activitySetEntity, Duration.ofSeconds(7200));
+        object = redissonClient.<ActivitySetEntity>getBucket(key).get();
+    }
 
     @Test
     public void testRedissonIncr() throws InterruptedException {
@@ -57,5 +76,7 @@ class ActivityRepositoryTest {
         long millisBetween = ChronoUnit.MILLIS.between(dateTime1, dateTime2);
         assertEquals(10, secondsBetween);
         assertEquals(10100, millisBetween);
+        long until = dateTime1.until(dateTime2, ChronoUnit.MILLIS);
+        assertEquals(10100, until);
     }
 }

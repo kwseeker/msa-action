@@ -1,32 +1,22 @@
 package top.kwseeker.msa.mall.infrastructure.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Builder;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import lombok.EqualsAndHashCode;
+import top.kwseeker.msa.mybatis.core.po.TimeBasePO;
 
 /**
  * 用户物品表
  */
 @TableName("md_user_item")
 @Data
-@Builder
-public class UserItemPO implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+public class UserItemPO extends TimeBasePO {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     private Long userId;
 
-    private Long itemId;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
+    private Integer itemId;
 }

@@ -2,7 +2,7 @@ spring:
   cloud:
     # 命名服务 & 配置服务
     nacos:
-      server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+      server-addr: ${NACOS_SERVER_ADDR:localhost:28848}
       discovery:
         namespace: ${NAMESPACE:dev}
         group: MSA-ACTION

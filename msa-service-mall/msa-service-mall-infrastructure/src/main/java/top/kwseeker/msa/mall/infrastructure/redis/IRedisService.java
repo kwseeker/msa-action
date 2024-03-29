@@ -73,6 +73,8 @@ public interface IRedisService {
      */
     long incr(String key);
 
+    long getAtomicLongValue(String key);
+
     /**
      * 指定值，自增 Key 的值；1、2、3、4
      *

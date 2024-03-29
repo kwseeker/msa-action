@@ -1,26 +1,17 @@
 package top.kwseeker.msa.mall.infrastructure.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Builder;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import lombok.EqualsAndHashCode;
+import top.kwseeker.msa.mybatis.core.po.TimeBasePO;
 
 /**
- * <p>
  * 用户活动参与记录表
- * </p>
- *
- * @author kwseeker
- * @since 2024-03-25
  */
 @TableName("md_user_activity_record")
 @Data
-@Builder
-public class UserActivityRecordPO implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class UserActivityRecordPO extends TimeBasePO {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,8 +23,4 @@ public class UserActivityRecordPO implements Serializable {
     private Integer activityId;
 
     private Integer count;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
 }

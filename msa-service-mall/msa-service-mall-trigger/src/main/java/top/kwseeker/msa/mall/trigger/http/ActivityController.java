@@ -1,10 +1,7 @@
 package top.kwseeker.msa.mall.trigger.http;
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.kwseeker.msa.action.framework.common.exception.GlobalErrorCodes;
 import top.kwseeker.msa.action.framework.common.model.Response;
 import top.kwseeker.msa.action.security.core.LoginUser;
@@ -31,7 +28,7 @@ public class ActivityController {
      */
     @PermitAll
     @PostMapping("/draw")
-    public Response<ActivityDrawResultVO> drawItem(ActivityDrawDTO drawDTO) {
+    public Response<ActivityDrawResultVO> drawItem(@RequestBody ActivityDrawDTO drawDTO) {
         Long loginUserId = SecurityFrameworkUtil.getLoginUserId();
         ActivityDrawEntity drawEntity = new ActivityDrawEntity(loginUserId, drawDTO.getActivityId());
         ActivityDrawResultVO activityDrawResultVO = activityService.drawItem(drawEntity);

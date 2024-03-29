@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public class JWTTokenService implements ITokenService {
 
-    private static final int expireSeconds = 7200;
+    private static final int expireSeconds = 12*3600;
 
     @Override
     public String createToken(UserEntity userEntity) {

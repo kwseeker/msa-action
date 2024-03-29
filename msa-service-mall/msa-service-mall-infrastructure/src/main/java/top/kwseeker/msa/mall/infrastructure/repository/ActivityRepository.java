@@ -1,32 +1,40 @@
 package top.kwseeker.msa.mall.infrastructure.repository;
 
-import cn.hutool.core.date.DateUtil;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.springframework.stereotype.Repository;
 import top.kwseeker.msa.action.framework.common.exception.GlobalErrorCodes;
-import top.kwseeker.msa.action.mall.types.exception.MallDomainException;
-import top.kwseeker.msa.action.mall.types.exception.MallErrorCodes;
+import top.kwseeker.msa.mall.types.exception.MallDomainException;
+import top.kwseeker.msa.mall.types.exception.MallErrorCodes;
+import top.kwseeker.msa.mall.domain.activity.model.entity.ActivityDeliveryItemEntity;
 import top.kwseeker.msa.mall.domain.activity.model.entity.ActivitySetEntity;
+import top.kwseeker.msa.mall.domain.activity.model.entity.ActivitySyncStockEntity;
 import top.kwseeker.msa.mall.domain.activity.model.vo.ActivityStockVO;
 import top.kwseeker.msa.mall.domain.activity.repository.IActivityRepository;
 import top.kwseeker.msa.mall.infrastructure.dao.ActivityMapper;
 import top.kwseeker.msa.mall.infrastructure.dao.ActivitySettingMapper;
+import top.kwseeker.msa.mall.infrastructure.dao.UserActivityRecordMapper;
+import top.kwseeker.msa.mall.infrastructure.dao.UserItemMapper;
 import top.kwseeker.msa.mall.infrastructure.po.ActivityPO;
 import top.kwseeker.msa.mall.infrastructure.po.ActivitySettingPO;
+import top.kwseeker.msa.mall.infrastructure.po.UserActivityRecordPO;
+import top.kwseeker.msa.mall.infrastructure.po.UserItemPO;
 import top.kwseeker.msa.mall.infrastructure.redis.IRedisService;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Repository
-public class ActivityRepository  implements IActivityRepository {
+public class ActivityRepository implements IActivityRepository {
 
     public static final String ActivityCacheKeyPrefix = "msa:mall:activity:";
     public static final String SettingKeyPrefix = ActivityCacheKeyPrefix + "setting:";
+    public static final String SettingLockPrefix = ActivityCacheKeyPrefix + "settingLock:";
     public static final String StockKeyPrefix = ActivityCacheKeyPrefix + "stock:";
     public static final String StockBindPrefix = ActivityCacheKeyPrefix + "stockBind:";
     public static final String UserPartakeRecordKeyPrefix = ActivityCacheKeyPrefix + "partakeUsers:";
@@ -36,6 +44,10 @@ public class ActivityRepository  implements IActivityRepository {
     private ActivityMapper activityMapper;
     @Resource
     private ActivitySettingMapper activitySettingMapper;
+    @Resource
+    private UserActivityRecordMapper userActivityRecordMapper;
+    @Resource
+    private UserItemMapper userItemMapper;
     @Resource
     private IRedisService redisService;
 
@@ -76,7 +88,7 @@ public class ActivityRepository  implements IActivityRepository {
         //从数据库中查询(防止万一缓存被误删，Redis断电、缓存预热时设置超时时间不对)
         //先加一把自旋锁，这个锁是为了防止发生缓存雪崩，只有获取到锁的线程才会去查数据库
         //Redisson默认的自旋锁，会不断重试获取锁，初始等待1ms,后面每次+2ms,最高等待128ms,直到获取锁、或者超时（ttl）
-        RLock lock = redisService.getSpinLock(SettingKeyPrefix + activityId);
+        RLock lock = redisService.getSpinLock(SettingLockPrefix + activityId);
         try {
             lock.lock(200, TimeUnit.MILLISECONDS);
             //走到这里有两种可能：1）获取到锁 2）超时
@@ -88,16 +100,21 @@ public class ActivityRepository  implements IActivityRepository {
             //查数据库
             ActivityPO activityPO = activityMapper.selectOne(ActivityPO::getId, activityId);
             ActivitySettingPO activitySettingPO = activitySettingMapper.selectOne(ActivitySettingPO::getId, activityPO.getSettingId());
-            return ActivitySetEntity.builder()
+            activitySetEntity = ActivitySetEntity.builder()
                     .activityId(activityPO.getId())
                     .name(activityPO.getName())
                     .itemId(activitySettingPO.getItemId())
                     .stock(activitySettingPO.getStock())
                     .startTime(activityPO.getStartTime())
                     .endTime(activityPO.getEndTime())
+                    .creator(activityPO.getCreator())
                     .build();
+            redisService.setValue(SettingKeyPrefix + activityId, activitySetEntity);
+            return activitySetEntity;
         } finally {
-            lock.unlock();
+            if (lock.isLocked() && lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
     }
 
@@ -105,12 +122,9 @@ public class ActivityRepository  implements IActivityRepository {
      * 注意这里返回已派发数量
      */
     @Override
-    public Integer getActivityStock(Integer activityId) {
-        Integer value = redisService.getValue(StockKeyPrefix + activityId);
-        return value == null ? 0 : value;
+    public long getActivityStock(Integer activityId) {
+        return redisService.getAtomicLongValue(StockKeyPrefix + activityId);
     }
-
-
 
     @Override
     public boolean getUserPartakeRecord(Integer activityId, Long userId) {
@@ -138,7 +152,7 @@ public class ActivityRepository  implements IActivityRepository {
         //走到这有两种情况：1）实际已经送完了(比如因为并发实际已经发完了，但是stockUsedCount无法返回最新的值) 2）没送完
         //这个锁可以防止因为情况1引起的超卖问题
         String stockTokenKey = StockBindPrefix + activityId + "_" + stockUsedCount;
-        long ttlMillis =  + 2 * OneDayMillis;   //加一天时间，没有必要着急删除，可以根据这个和发货进行对账
+        long ttlMillis = LocalDateTime.now().until(activitySetEntity.getEndTime(), ChronoUnit.MILLIS) + 2 * OneDayMillis;   //加一天时间，没有必要着急删除，可以根据这个和发货进行对账
         boolean lockToken = redisService.setIfAbsent(stockTokenKey, userId, ttlMillis);
         if (!lockToken) {
             //抢锁失败，秒杀失败
@@ -147,5 +161,31 @@ public class ActivityRepository  implements IActivityRepository {
         }
 
         return new ActivityStockVO(GlobalErrorCodes.SUCCESS, stockTokenKey, (int) stockUsedCount);
+    }
+
+    @Override
+    public void updateActivityStockTODB(ActivitySyncStockEntity activitySyncStockEntity) {
+        ActivityPO activityPO = activityMapper.selectOne(ActivityPO::getId, activitySyncStockEntity.getActivityId());
+        LambdaUpdateWrapper<ActivitySettingPO> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(ActivitySettingPO::getId, activityPO.getSettingId())
+                .set(ActivitySettingPO::getUsedCount, activitySyncStockEntity.getUsedCount());
+        activitySettingMapper.update(null, updateWrapper);
+    }
+
+    @Override
+    public void addUserPartakeRecordToDB(ActivitySyncStockEntity activitySyncStockEntity) {
+        UserActivityRecordPO userActivityRecordPO = new UserActivityRecordPO();
+        userActivityRecordPO.setUserId(activitySyncStockEntity.getUserId());
+        userActivityRecordPO.setActivityId(activitySyncStockEntity.getActivityId());
+        userActivityRecordPO.setCount(1);
+        userActivityRecordMapper.save(userActivityRecordPO);
+    }
+
+    @Override
+    public void deliveryItem(ActivityDeliveryItemEntity activityDeliveryItemEntity) {
+        UserItemPO userItemPO = new UserItemPO();
+        userItemPO.setUserId(activityDeliveryItemEntity.getUserId());
+        userItemPO.setItemId(activityDeliveryItemEntity.getItemId());
+        userItemMapper.save(userItemPO);
     }
 }

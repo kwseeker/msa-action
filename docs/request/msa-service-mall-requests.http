@@ -1,0 +1,17 @@
+###
+POST http://localhost:28100/user/auth/login
+Content-Type: application/json
+
+{
+  "username": "tester",
+  "password": "123456"
+}
+
+###
+POST http://localhost:28101/mall/activity/draw
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE3MTE3Nzc4MDUsImRlcHRJZCI6MSwidXNlcklkIjoxMiwidXNlcm5hbWUiOiJ0ZXN0ZXIifQ.Oyyv54zyE-lBKfTixZBvT99c9qc46bnJ4FP2li3ZMV5Ey9SM4OzG3RHJ3jk4T8sqaURh6T34hLqRlYMG0DmvIVOOTIva0E7M2Z1k5QU09-yVTbLU9PpYqKqfIg8ODzTvoBobvaif4R14JsMr38z-efYPz3dyh5kFna9FYnHo4WdVJjNLR5C9xs5RH_JiGUMesHVeHRPLRJMthY9CCR5i9G67Wq-xnBmGb9EE54KyLjrg7ccvHRJB5opBnWwfzywodNAYQCQSgvpDcuFnjjpWfT5L2rveNDQXsqquajOlC-GOe7ipeo_gZIxJOx5EmJTDkvVpaNQ5DAIYAZZQjxkCag
+
+{
+  "activityId": 1
+}

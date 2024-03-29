@@ -1,6 +1,8 @@
 package top.kwseeker.msa.mall.domain.activity.repository;
 
+import top.kwseeker.msa.mall.domain.activity.model.entity.ActivityDeliveryItemEntity;
 import top.kwseeker.msa.mall.domain.activity.model.entity.ActivitySetEntity;
+import top.kwseeker.msa.mall.domain.activity.model.entity.ActivitySyncStockEntity;
 import top.kwseeker.msa.mall.domain.activity.model.vo.ActivityStockVO;
 
 public interface IActivityRepository {
@@ -14,7 +16,7 @@ public interface IActivityRepository {
      *
      * @return 已派发数量
      */
-    Integer getActivityStock(Integer activityId);
+    long getActivityStock(Integer activityId);
 
     /**
      * 查询用户活动参与记录
@@ -30,5 +32,17 @@ public interface IActivityRepository {
      */
     void addUserPartakeRecord(Integer activityId, Long userId);
 
+    /**
+     * 扣减Redis库存
+     */
     ActivityStockVO subtractActivityStock(ActivitySetEntity activitySetEntity, Long userId);
+
+    /**
+     * 更新活动数据表已使用库存
+     */
+    void updateActivityStockTODB(ActivitySyncStockEntity activitySyncStockEntity);
+
+    void addUserPartakeRecordToDB(ActivitySyncStockEntity activitySyncStockEntity);
+
+    void deliveryItem(ActivityDeliveryItemEntity activityDeliveryItemEntity);
 }

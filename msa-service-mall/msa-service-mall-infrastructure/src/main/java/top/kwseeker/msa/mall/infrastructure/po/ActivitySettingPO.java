@@ -22,4 +22,6 @@ public class ActivitySettingPO extends BasePO {
     private Integer itemId;
 
     private Integer stock;
+
+    private Integer usedCount;
 }

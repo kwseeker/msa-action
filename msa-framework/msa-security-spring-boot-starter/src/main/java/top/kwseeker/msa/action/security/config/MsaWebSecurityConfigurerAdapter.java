@@ -3,9 +3,9 @@ package top.kwseeker.msa.action.security.config;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -38,7 +38,8 @@ import java.util.Set;
 @Slf4j
 //@Order(2147483641)    //在默认的过滤器链之前创建(默认过滤器链的优先级是2147483642)，但是并没有效，加在Bean方法上也无效，待研究
 @AutoConfiguration
-@AutoConfigureBefore(SecurityAutoConfiguration.class)
+//@AutoConfigureBefore(SecurityAutoConfiguration.class)
+@AutoConfigureBefore(ManagementWebSecurityAutoConfiguration.class)  //调试了下Spring源码发现默认的过滤器链是被ManagementWebSecurityAutoConfiguration注册进去的不是SecurityAutoConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) //TODO
 public class MsaWebSecurityConfigurerAdapter {  //旧版本是通过 WebSecurityConfigurerAdapter 这个类配置过滤器链等组件的，新版本已经弃用
                                                 //这里借助这个名字表达做的一样的事
