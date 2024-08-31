@@ -15,8 +15,9 @@
 
     <modules>
         <module>msa-common</module>
-        <module>msa-security-spring-boot-starter</module>
         <module>msa-mybatis-spring-boot-starter</module>
+        <module>msa-security-spring-boot-starter</module>
+        <module>msa-web-spring-boot-starter</module>
     </modules>
 
 </project>

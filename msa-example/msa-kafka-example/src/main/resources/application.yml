@@ -1,7 +1,7 @@
 spring:
   kafka:
     #kafka server的地址，集群配多个，中间，逗号隔开
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:29092
     producer:
       retries: 3
       #这里是按字节计算，不是消息个数，即 16384 bytes
