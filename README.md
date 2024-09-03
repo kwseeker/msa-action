@@ -11,7 +11,6 @@
   + [x] Spring Boot 
 
   + [x] Spring Cloud 
-
 + 认证与授权
 
   + [x] Spring Security 
@@ -19,7 +18,6 @@
   + [ ] Shiro
 
   + [ ] 安全框架平替
-
 + 数据相关
 
   + [ ] Mybatis
@@ -33,23 +31,21 @@
   + [ ] TiDB
 
   + [ ] MongoDB
-
 + 分布式技术
 
   + 注册中心与配置中心
 
     + [x] Nacos
-
-    + [ ] Etcd
-
-  + 缓存
+  + [ ] Etcd
+    + [ ] 框架平替
++ 缓存
     + [ ] Redis
-
-  + 消息队列
-
-    + [ ] RocketMQ
-
-    + [ ] Kafka
+    + [ ] Ehcache
++ 消息队列
+  
+  + [ ] RocketMQ
+  
+  + [ ] Kafka
 
 
 + 计划任务
