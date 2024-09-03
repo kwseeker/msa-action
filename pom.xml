@@ -16,6 +16,7 @@
     <module>msa-gateway</module>
     <module>msa-service-mall</module>
     <module>msa-service-user</module>
+    <module>msa-service-web-one</module>
   </modules>
 
   <properties>

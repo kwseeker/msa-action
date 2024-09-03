@@ -18,6 +18,7 @@
         <module>msa-mybatis-spring-boot-starter</module>
         <module>msa-security-spring-boot-starter</module>
         <module>msa-web-spring-boot-starter</module>
+        <module>msa-monitor-reporter</module>
     </modules>
 
 </project>

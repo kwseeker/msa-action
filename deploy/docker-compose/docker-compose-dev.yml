@@ -3,7 +3,7 @@ services:
   # https://hub.docker.com/_/mysql
   msa-mysql:
     container_name: msa-mysql
-    #hostname: msa-mysql
+    hostname: msa-mysql
     image: mysql:8.0.32
     #command: "--default-authentication-plugin=mysql_native_password" # 可以放配置文件中
     #restart: always
@@ -169,6 +169,32 @@ services:
       - msa-action-network
     depends_on:
       - msa-kafka
+
+  # 监控系统-数据采集
+  msa-prometheus:
+    image: bitnami/prometheus:2.47.2
+    container_name: msa-prometheus
+    #restart: always
+    ports:
+      - "29090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - msa-action-network
+
+  # 监控系统-数据展示
+  msa-grafana:
+    image: grafana/grafana:10.2.0
+    container_name: msa-grafana
+    #restart: always
+    ports:
+      - "24000:4000"
+    volumes:
+      - ./grafana:/etc/grafana
+    networks:
+      - msa-action-network
+    depends_on:
+      - msa-prometheus
 
 networks:
   msa-action-network:

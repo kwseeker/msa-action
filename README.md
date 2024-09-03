@@ -56,7 +56,7 @@
 
 + 网关
     + [ ] Nginx
-    + [ ] Spring Cloud Gateway
+    + [x] Spring Cloud Gateway
 
 + 通信
 
@@ -118,3 +118,35 @@
   + [ ] JDK8
 
   + [ ] JDK21
+
+## 模块说明
+
++ **msa-dependencies**
+
++ msa-example
+
++ **msa-framework**
+
+  + **msa-common**
+
+  + **msa-monitor-reporter**
+
+    监控系统的数据收集器，主要包含两部分：数据采集、数据上报。
+
+    数据采集：从监控指标类型看，数据收集器可能需要依赖日志 Appender（收集业务日志、性能指标）、Metric（收集机器系统资源占用）、JMX（收集 JVM 信息）实现。
+
+    数据上报：可以借助消息队列、Redis发布订阅、Guava消息总线、RPC框架、甚至Netty实现。
+
+  + **msa-mybatis-spring-boot-starter**
+
+  + **msa-security-spring-boot-starter**
+
+  + **msa-web-spring-boot-starter**
+
++ **msa-gateway**
+
++ **msa-service-mall**
+
++ **msa-service-user**
+
++ **msa-service-web-one**

@@ -1,0 +1,32 @@
+# 配置文档：https://prometheus.io/docs/prometheus/latest/configuration/configuration
+global:
+  scrape_interval:     15s # 采集数据的间隔. 默认是1分钟
+  #scrape_timeout: 10s # 采集超时时间，默认是10秒
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+# AlertManager configuration
+#alerting:
+#  alertmanagers:
+#    - static_configs:
+#      - targets:
+#        - 'alertmanager:9093'
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+#rule_files:
+# - "first_rules.yml"
+# - "second_rules.yml"
+
+scrape_configs:
+  # 配置一个采集任务监控 Prometheus 自身，即抓取 localhost:9090/metrics 接口信息
+  - job_name: 'msa-prometheus'
+    static_configs:
+      - targets: [ 'localhost:9090' ]
+  # 配置一个采集任务，综合下面的配置信息意思是抓取 msa-service-user:28100/actuator/prometheus 接口信息
+  - job_name: 'msa-service-user'
+    # 监控的目标请求路径，默认是 '/metrics', scheme 默认是 'http'
+    metrics_path: '/user/actuator/prometheus'
+    static_configs:
+      - targets:  # 抓取目标
+          - '172.24.0.1:28100'
+        labels:
+          app: 'msa-service-user'
