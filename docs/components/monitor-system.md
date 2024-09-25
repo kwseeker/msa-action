@@ -110,6 +110,10 @@
 
   现在已经不怎么流行了，忽略。
 
+### [OpenMetrics](https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md)
+
+定义监控指标标准，比如数据模型、指标类型、数据传输格式等等内容。
+
 ## 参考
 
 + [Prometheus + Grafana 快速入门](https://www.cnblogs.com/chanshuyi/category/1862951.html)
