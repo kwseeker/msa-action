@@ -4,12 +4,21 @@ import java.util.concurrent.TimeUnit;
 
 public class TimingContext {
 
-    private final long startTime;
-    private final TimeUnit timeUnit;
+    private long startTime;
+    private TimeUnit timeUnit;
+
+    public TimingContext() {}
 
     public TimingContext(long startTime, TimeUnit timeUnit) {
         this.startTime = startTime;
         this.timeUnit = timeUnit;
+    }
+
+    public static TimingContext start() {
+        TimingContext timingContext = new TimingContext();
+        timingContext.startTime = System.currentTimeMillis();
+        timingContext.timeUnit = TimeUnit.MILLISECONDS;
+        return timingContext;
     }
 
     public long getStartTimeInMillis() {

@@ -49,6 +49,11 @@
                 <artifactId>msa-security-spring-boot-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>top.kwseeker.msa</groupId>
+                <artifactId>msa-monitor-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <!-- Spring Boot & Cloud -->
             <dependency>
@@ -164,6 +169,11 @@
             <dependency>
                 <groupId>io.prometheus</groupId>
                 <artifactId>prometheus-metrics-core</artifactId>
+                <version>${prometheus-metrics-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>prometheus-metrics-exposition-formats</artifactId>
                 <version>${prometheus-metrics-core.version}</version>
             </dependency>
         </dependencies>

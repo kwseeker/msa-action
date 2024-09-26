@@ -40,6 +40,7 @@
         <artifactId>msa-dependencies</artifactId>
         <version>${revision}</version>
         <type>pom</type>
+        <!-- 将 msa-dependencies pom.xml 信息导入到当前 pom -->
         <scope>import</scope>
       </dependency>
     </dependencies>

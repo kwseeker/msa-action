@@ -19,17 +19,17 @@ import top.kwseeker.msa.action.monitor.metrics.web.servlet.WebApiMetricsFilter;
 public class WebApiMetricsAutoConfiguration {
 
     @Bean
-    public WebApiMetrics msaRequestMetrics(PrometheusRegistry prometheusRegistry) {
+    public WebApiMetrics webApiMetrics(PrometheusRegistry prometheusRegistry) {
         return new WebApiMetrics(prometheusRegistry);
     }
 
     /**
      * Web Servlet 拦截器
-     * 用于拦截被注解的请求，向采集器中记录数据，首次会创建并注册采集器
+     * 用于拦截被注解的请求，向采集器中记录数据，拦截器首次拦截某个请求会创建并注册采集器
      */
     @Bean
     @ConditionalOnWebApplication
-    public FilterRegistrationBean<WebApiMetricsFilter> msaRequestMetricsFilter() {
-        return new FilterRegistrationBean<>(new WebApiMetricsFilter());
+    public FilterRegistrationBean<WebApiMetricsFilter> msaRequestMetricsFilter(WebApiMetrics webApiMetrics) {
+        return new FilterRegistrationBean<>(new WebApiMetricsFilter(webApiMetrics));
     }
 }
