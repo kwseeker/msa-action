@@ -2,6 +2,7 @@ package top.kwseeker.msa.action.user.trigger.http;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import top.kwseeker.msa.action.monitor.annotation.MetricsWebApi;
 import top.kwseeker.msa.action.user.api.local.ITokenAPI;
 import top.kwseeker.msa.action.user.api.model.TokenVerifiedDTO;
 import top.kwseeker.msa.action.user.domain.auth.model.entity.LoginRespEntity;
@@ -24,6 +25,7 @@ public class AuthController {
     @Resource
     private ITokenAPI tokenAPI;
 
+    @MetricsWebApi
     @PermitAll
     @PostMapping("/login")
     public Response<LoginRespEntity> login(@RequestBody LoginDTO loginDTO) {

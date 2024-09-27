@@ -5,9 +5,12 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import top.kwseeker.msa.action.monitor.config.MsaMonitorAutoConfiguration;
 import top.kwseeker.msa.action.monitor.metrics.web.servlet.WebApiMetrics;
 import top.kwseeker.msa.action.monitor.metrics.web.servlet.WebApiMetricsFilter;
+
+import javax.servlet.DispatcherType;
 
 /**
  * 针对请求监控指标的自动配置
@@ -30,6 +33,10 @@ public class WebApiMetricsAutoConfiguration {
     @Bean
     @ConditionalOnWebApplication
     public FilterRegistrationBean<WebApiMetricsFilter> msaRequestMetricsFilter(WebApiMetrics webApiMetrics) {
-        return new FilterRegistrationBean<>(new WebApiMetricsFilter(webApiMetrics));
+        FilterRegistrationBean<WebApiMetricsFilter> registration = new FilterRegistrationBean<>(
+                new WebApiMetricsFilter(webApiMetrics));
+        registration.setOrder(Ordered.HIGHEST_PRECEDENCE + 2);
+        registration.setDispatcherTypes(DispatcherType.REQUEST);
+        return registration;
     }
 }

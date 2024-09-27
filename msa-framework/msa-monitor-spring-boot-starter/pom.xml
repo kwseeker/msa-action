@@ -4,13 +4,13 @@
     <parent>
         <groupId>top.kwseeker.msa</groupId>
         <artifactId>msa-framework</artifactId>
-        <version>0.0.1</version>
+        <!-- 需要和父模块配置保持一致，否则会去远程仓库查找 msa-framework -->
+        <!--<version>0.0.1</version>--> <!-- 错误写法 -->
+        <version>${revision}</version>
     </parent>
 
-    <groupId>top.kwseeker.msa.monitor</groupId>
     <artifactId>msa-monitor-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
-
     <name>msa-monitor-spring-boot-starter</name>
 
     <dependencies>
@@ -22,11 +22,19 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.boot</groupId>-->
+        <!--    <artifactId>spring-boot-autoconfigure</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -47,6 +55,14 @@
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
     </dependencies>
 </project>

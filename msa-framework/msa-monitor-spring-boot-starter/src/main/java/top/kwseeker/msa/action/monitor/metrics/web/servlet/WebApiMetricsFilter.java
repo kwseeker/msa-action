@@ -33,14 +33,6 @@ public class WebApiMetricsFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        // 只拦截带 MetricsWebApi 注解的接口请求
-        Object handler = getHandler(request);
-        MetricsWebApi metricsWebApiAnnotation = getWebApiAnnotation(handler);
-        if (metricsWebApiAnnotation == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         TimingContext timingContext = TimingContext.start();    //有时其他业务可能也会记录请求时间，有的话可以复用
         try {
             filterChain.doFilter(request, response);
@@ -58,6 +50,12 @@ public class WebApiMetricsFilter extends OncePerRequestFilter {
      * 统计数据记录
      */
     private void record(TimingContext timingContext, HttpServletRequest request, HttpServletResponse response) {
+        // 只记录带 MetricsWebApi 注解的接口请求
+        Object handler = getHandler(request);   //注意这里借助 HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE 属性来获取，需要确保取的动作在这个属性设置之后
+        MetricsWebApi metricsWebApiAnnotation = getWebApiAnnotation(handler);
+        if (metricsWebApiAnnotation == null) {
+            return;
+        }
         webApiMetrics.record(timingContext, request, response);
     }
 

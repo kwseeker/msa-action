@@ -1,8 +1,11 @@
 package top.kwseeker.msa.action.monitor.metrics.web.servlet;
 
+import cn.hutool.core.date.DateUtil;
 import io.prometheus.metrics.core.datapoints.CounterDataPoint;
 import io.prometheus.metrics.core.metrics.Counter;
 import io.prometheus.metrics.model.snapshots.CounterSnapshot;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,10 +16,13 @@ import java.util.concurrent.TimeUnit;
  * 重新封装一个Counter用于统计接口QPS
  * 只保留各接口最近10分钟的数据
  */
+@Slf4j
+@Getter
 public class ApiQpsCounter {
 
     private static final int TTL = 10 * 60;  //10 minutes
     private static final int CLEAR_INTERVAL = 10;  //10s
+
     private final Counter counter;
     // 需要记录一下各接口的labels(uri、method)，用于清除过期的数据, 保持和 client_java 的 key 一致
     // 时间（s）-> 各接口此时间记录的labels
@@ -30,13 +36,14 @@ public class ApiQpsCounter {
                 TTL - CLEAR_INTERVAL, CLEAR_INTERVAL, TimeUnit.SECONDS);
     }
 
-    public CounterDataPoint labelValues(String uri, String method, Long timeSeconds) {
+    public CounterDataPoint labelValues(String uri, String method, Long startTimeMillis) {
         //记录labels
-        Set<List<String>> labelsSet = timeToLabels.computeIfAbsent(timeSeconds, time -> new HashSet<>());
+        Set<List<String>> labelsSet = timeToLabels.computeIfAbsent(startTimeMillis / 1000, time -> new HashSet<>());
         List<String> newLabelsValues = new ArrayList<>(3);
         newLabelsValues.add(uri);
         newLabelsValues.add(method);
-        newLabelsValues.add(Long.toString(timeSeconds));
+        String formattedDateTime = DateUtil.format(new Date(startTimeMillis), "yyyy-MM-dd HH:mm:ss");
+        newLabelsValues.add(formattedDateTime);
         labelsSet.add(newLabelsValues);
         //获取标签的DataPoint(内部是不存在则创建)
         return counter.labelValues(newLabelsValues.toArray(new String[3]));
@@ -49,6 +56,7 @@ public class ApiQpsCounter {
     }
 
     private void clearTask() {
+        log.info("Clear timeout record data ...");
         long currentTimeSecond = System.currentTimeMillis() / 1000;
         for (Map.Entry<Long, Set<List<String>>> entry : timeToLabels.entrySet()) {
             long recordTime = entry.getKey();
@@ -60,13 +68,5 @@ public class ApiQpsCounter {
                 }
             }
         }
-    }
-
-    public Counter getCounter() {
-        return counter;
-    }
-
-    public Map<Long, Set<List<String>>> getTimeToLabels() {
-        return timeToLabels;
     }
 }

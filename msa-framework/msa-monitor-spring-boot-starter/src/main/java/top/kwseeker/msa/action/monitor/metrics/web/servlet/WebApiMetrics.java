@@ -69,6 +69,7 @@ public class WebApiMetrics {
      */
     public void record(TimingContext timingContext, HttpServletRequest request, HttpServletResponse response) {
         // 接口访问次数，只统计成功的访问次数
+        // TODO 接入数据库持久化，用于记录自上线到当前时间段内各接口的访问次数
         if (response.getStatus() == HttpStatus.OK.value()) {
             apiRequestSuccessCounter.labelValues(request.getRequestURI(), request.getMethod()).inc();
         }
