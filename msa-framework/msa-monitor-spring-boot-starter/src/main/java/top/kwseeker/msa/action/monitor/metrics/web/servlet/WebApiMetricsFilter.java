@@ -72,11 +72,7 @@ public class WebApiMetricsFilter extends OncePerRequestFilter {
                 return webApiAnnotation;
             }
             // 方法上没有注解的话，再获取类上的注解
-            webApiAnnotation = findWebApiAnnotation(handlerMethod.getBeanType());
-            if (webApiAnnotation != null) {
-                return webApiAnnotation;
-            }
-            return null;
+            return findWebApiAnnotation(handlerMethod.getBeanType());
         }
         // 暂时不支持其他的handler类型, 需要的的话可以再添加
         return null;

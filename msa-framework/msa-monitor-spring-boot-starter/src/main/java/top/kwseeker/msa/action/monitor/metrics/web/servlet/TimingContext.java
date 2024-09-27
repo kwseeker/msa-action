@@ -1,18 +1,18 @@
 package top.kwseeker.msa.action.monitor.metrics.web.servlet;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.concurrent.TimeUnit;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TimingContext {
 
     private long startTime;
     private TimeUnit timeUnit;
-
-    public TimingContext() {}
-
-    public TimingContext(long startTime, TimeUnit timeUnit) {
-        this.startTime = startTime;
-        this.timeUnit = timeUnit;
-    }
 
     public static TimingContext start() {
         TimingContext timingContext = new TimingContext();
@@ -23,13 +23,5 @@ public class TimingContext {
 
     public long getStartTimeInMillis() {
         return timeUnit.toMillis(startTime);
-    }
-
-    long getStartTime() {
-        return startTime;
-    }
-
-    TimeUnit getTimeUnit() {
-        return timeUnit;
     }
 }
