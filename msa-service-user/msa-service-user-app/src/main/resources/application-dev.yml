@@ -81,4 +81,6 @@ management:
 
 logging:
   level:
-    top.kwseeker.msa.action.user: debug
+    # 相当于设置了 <logger name="top.kwseeker.msa.action" level="debug" />
+    top.kwseeker.msa.action: debug
+  config: classpath:logback-spring.xml

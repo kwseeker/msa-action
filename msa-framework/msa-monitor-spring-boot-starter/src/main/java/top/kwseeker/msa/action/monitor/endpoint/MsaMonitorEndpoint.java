@@ -1,9 +1,11 @@
 package top.kwseeker.msa.action.monitor.endpoint;
 
 import io.prometheus.metrics.expositionformats.ExpositionFormatWriter;
+import io.prometheus.metrics.expositionformats.OpenMetricsTextFormatWriter;
 import io.prometheus.metrics.expositionformats.PrometheusTextFormatWriter;
 import io.prometheus.metrics.model.registry.PrometheusRegistry;
 import io.prometheus.metrics.model.snapshots.MetricSnapshots;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.boot.actuate.endpoint.web.WebEndpointResponse;
 import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
@@ -17,6 +19,7 @@ import java.util.Set;
 /**
  * MSA监控端点: /actuator/msa-monitor
  */
+@Slf4j
 @WebEndpoint(id = "msa-monitor")
 public class MsaMonitorEndpoint {
 
@@ -37,11 +40,14 @@ public class MsaMonitorEndpoint {
     )
     public WebEndpointResponse<String> scrape(TextOutputFormat format, @Nullable Set<String> includedNames) {
         //从 PrometheusRegistry 中读取 includedNames 指定的指标数据
+        log.debug("scrape /actuator/msa-monitor data at " + System.currentTimeMillis());
         MetricSnapshots metricSnapshots = this.collectorRegistry.scrape(
                 t -> includedNames == null || includedNames.contains(t));
         //将 MetricsSnapshots 转换为 Prometheus 的文本格式并通过 WebEndpointResponse 返回
         try {
-            ExpositionFormatWriter writer = new PrometheusTextFormatWriter(false);
+            ExpositionFormatWriter writer = format == TextOutputFormat.CONTENT_TYPE_OPENMETRICS_100 ?
+                    new OpenMetricsTextFormatWriter(false, false) :
+                    new PrometheusTextFormatWriter(false);
             // 当要写入数据大于初始分配的缓冲大小时会自动扩容，不需要担心缓冲大小不足
             ByteArrayOutputStream baos = new ByteArrayOutputStream(this.nextMetricsScrapeSize);
             writer.write(baos, metricSnapshots);

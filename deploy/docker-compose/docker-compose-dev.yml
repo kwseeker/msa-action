@@ -87,6 +87,7 @@ services:
         condition: service_healthy
 
   # https://hub.docker.com/r/nacos/nacos-server
+  # uri: http://localhost:28848/nacos/
   msa-nacos:
     container_name: msa-nacos
     image: nacos/nacos-server:v2.2.3-slim
@@ -183,6 +184,7 @@ services:
       - msa-action-network
 
   # 监控系统-数据展示
+  # 用户名密码：admin/admin
   msa-grafana:
     image: grafana/grafana:10.2.0
     container_name: msa-grafana
@@ -194,6 +196,7 @@ services:
     networks:
       - msa-action-network
     depends_on:
+      - msa-mysql
       - msa-prometheus
 
 networks:

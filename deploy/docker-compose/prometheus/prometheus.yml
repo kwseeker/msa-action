@@ -30,3 +30,11 @@ scrape_configs:
           - '172.24.0.1:28100'
         labels:
           app: 'msa-service-user'
+  # 自定义采集器的采集任务
+  - job_name: 'msa-service-user-monitor'
+    metrics_path: '/user/actuator/msa-monitor'
+    static_configs:
+      - targets:  # 抓取目标
+          - '172.24.0.1:28100'
+        labels:
+          app: 'msa-service-user'
