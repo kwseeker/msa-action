@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: ${NACOS_SERVER_ADDR:localhost:28848}
+      discovery:
+        namespace: ${NAMESPACE:dev}
+        group: MSA-ACTION

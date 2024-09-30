@@ -1,0 +1,9 @@
+server:
+  port: 28102
+  servlet:
+    context-path: /web-one
+spring:
+  application:
+    name: msa-service-web-one
+  profiles:
+    active: dev

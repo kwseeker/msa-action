@@ -1,0 +1,9 @@
+server:
+  port: 28201
+  servlet:
+    context-path: /basic-one
+spring:
+  application:
+    name: msa-service-basic-one
+  profiles:
+    active: dev

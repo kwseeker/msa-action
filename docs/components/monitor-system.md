@@ -92,7 +92,7 @@
 
     但是可视化能力比较弱，通常使用 Grafana 实现数据的可视化。
 
-    [Grafana 图表库](https://grafana.com/grafana/dashboards/) (别人做好的图表) 可以直接导入 Grafana 使用。
+    [Grafana 图表库](https://grafana.com/grafana/dashboards/) (别人做好的图表) 可以直接导入 Grafana 使用，也可以通过这些图表学习 Grafana 的语法。
 
   + 告警
 

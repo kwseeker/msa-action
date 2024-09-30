@@ -56,7 +56,7 @@ public class ApiQpsCounter {
     }
 
     private void clearTask() {
-        log.info("Clear timeout record data ...");
+        log.debug("Clear timeout record data ...");
         long currentTimeSecond = System.currentTimeMillis() / 1000;
         for (Map.Entry<Long, Set<List<String>>> entry : timeToLabels.entrySet()) {
             long recordTime = entry.getKey();

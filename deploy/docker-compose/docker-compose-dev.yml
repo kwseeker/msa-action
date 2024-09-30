@@ -199,6 +199,65 @@ services:
       - msa-mysql
       - msa-prometheus
 
+  msa-elasticsearch:
+    image: elasticsearch:8.1.0
+    container_name: msa-elasticsearch
+    ports:
+      - "29200:9200"
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+      - ./elasticsearch/plugins:/usr/share/elasticsearch/plugins
+    environment:
+      ES_JAVA_OPTS: -Xms256m -Xmx1024m
+      discovery.type: single-node
+      cluster.routing.allocation.disk.watermark.low: 90%
+      cluster.routing.allocation.disk.watermark.high: 95%
+      cluster.routing.allocation.disk.watermark.flood_stage: 98%
+      xpack.security.enabled: false
+      xpack.security.http.ssl.enabled: false
+    networks:
+      - msa-action-network
+
+  # 各个服务 JavaAgent 配置：
+  # skywalking-agent 下载解压后整个文件夹都需要复制到项目目录下
+  # VM 选项：-javaagent:/home/arvin/mywork/java/micro_service/msa-action/deploy/docker-compose/skywalking/skywalking-agent.jar
+  # 环境变量：SW_AGENT_NAME=msa-service-xxx;SW_AGENT_COLLECTOR_BACKEND_SERVICES=msa-skywalking-oap:11800
+  # 注意开发时，服务是本地启动的，skywalking-oap是Docker容器启动的，服务是无法通过容器名解析IP地址的，后面的环境变量需要修改 SW_AGENT_COLLECTOR_BACKEND_SERVICES=localhost:21800
+  msa-skywalking-oap:
+    image: apache/skywalking-oap-server:9.0.0
+    container_name: msa-skywalking-oap
+    ports:
+      - "22800:12800"
+      - "21800:11800"
+    environment:
+      TZ: Asia/Shanghai
+      SW_STORAGE: elasticsearch
+      SW_CORE_REST_PORT: 12800
+      SW_CORE_GRPC_PORT: 11800
+      SW_STORAGE_ES_CLUSTER_NODES: msa-elasticsearch:9200
+      JAVA_OPTS: -Xms256m -Xmx1G
+    networks:
+      - msa-action-network
+    depends_on:
+      - msa-elasticsearch
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  msa-skywalking-ui:
+    image: apache/skywalking-ui:9.0.0
+    container_name: msa-skywalking-ui
+    ports:
+      - "28080:8080"
+    environment:
+      TZ: Asia/Shanghai
+      SW_OAP_ADDRESS: http://msa-skywalking-oap:12800
+    networks:
+      - msa-action-network
+    depends_on:
+      - msa-skywalking-oap
+
 networks:
   msa-action-network:
     name: msa-action-network  # 不指定名称的话总是会将当前文件夹名作为网络名前缀

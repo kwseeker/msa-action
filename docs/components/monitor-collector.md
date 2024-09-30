@@ -339,6 +339,8 @@ public static void main(String[] args) throws InterruptedException, IOException 
 
   这里统计一段时间内（比如1小时，做成可配置的）接口访问的QPS。  
 
+  实际不会这么做，实际是 Prometheus 每隔一小段时间（比如10s）统计接口请求数量，由于 Prometheus 内部用的 TSDB 存储这些采集的数据，数据实际表现是一系列的时间点，每个时间点保存接口请求的数量，最终由 Prometheus UI 或 Grafana 通过 PromQL 借助这些数据求 QPS（比如求平均值），所以说 Grafana 中统计的 QPS 更多情况下其实是个平均值，除非像是一些抢票秒杀场景，其他场景流量在这一小段时间还是较为平滑的，这么统计其实也是没有问题的。
+
 + 统计接口一段时间内响应时间的百分位直方图
 
   比如统计1小时内接口响应时间的 0.5 0.9 0.99 百分位直方图。    

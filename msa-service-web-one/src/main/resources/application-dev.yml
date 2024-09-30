@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: ${NACOS_SERVER_ADDR:localhost:28848}
+      discovery:
+        namespace: ${NAMESPACE:dev}
+        group: MSA-ACTION
+
+feign:
+  client:
+    config:
+      default:
+        logger-level: full
+        connect-timeout: 3000
+        read-timeout: 5000

@@ -1,4 +1,4 @@
-借助 Prometheus client_java 封装的监控组件。
+Spring Boot Starter 监控组件
 
 功能：
 
