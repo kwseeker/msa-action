@@ -2,6 +2,8 @@ server:
   port: 28201
   servlet:
     context-path: /basic-one
+grpc:
+  port: 38201
 spring:
   application:
     name: msa-service-basic-one

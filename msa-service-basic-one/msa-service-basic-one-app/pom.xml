@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>top.kwseeker.msa</groupId>
-        <artifactId>msa-action</artifactId>
+        <artifactId>msa-service-basic-one</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>msa-service-web-one</artifactId>
+    <artifactId>msa-service-basic-one-app</artifactId>
     <packaging>jar</packaging>
-    <name>msa-service-web-one</name>
-    <description>一个web服务，测试整合监控、RPC调用、Swagger日志等</description>
+    <name>msa-service-basic-one-app</name>
+    <description>一个基础服务，测试整合监控、RPC调用、Swagger日志等</description>
 
     <dependencies>
         <dependency>
@@ -21,6 +21,7 @@
             <groupId>top.kwseeker.msa</groupId>
             <artifactId>msa-service-basic-one-api</artifactId>
             <version>${revision}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -28,26 +29,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
     </dependencies>
 </project>

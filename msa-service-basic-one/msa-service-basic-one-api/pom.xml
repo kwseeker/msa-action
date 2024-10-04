@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>top.kwseeker.msa</groupId>
+        <artifactId>msa-service-basic-one</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>msa-service-basic-one-api</artifactId>
+    <packaging>jar</packaging>
+    <name>msa-service-basic-one-api</name>
+
+    <properties>
+        <protoc-gen-grpc-java.version>1.56.0</protoc-gen-grpc-java.version>
+        <protoc.version>3.22.3</protoc.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>top.kwseeker.msa</groupId>
+            <artifactId>msa-rpc-spring-boot-starter</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.7.1</version>
+            </extension>
+        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>0.6.1</version>
+                <configuration>
+                    <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
+                    <pluginId>grpc-java</pluginId>
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${protoc-gen-grpc-java.version}:exe:${os.detected.classifier}</pluginArtifact>
+                    <!-- 指定 protobuf 文件路径，protobuf-maven-plugin 默认会解析 src/main/proto 中的文件 -->
+                    <protoSourceRoot>src/main/java/top/kwseeker/msa/action/basicone/api/grpc/proto</protoSourceRoot>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!-- 执行这个 goal 在 ${project.build.directory}/generated-sources 生成 protobuf/java -->
+                            <goal>compile</goal>
+                            <!-- 执行这个 goal 在 ${project.build.directory}/generated-sources 生成 protobuf/grpc-java -->
+                            <!-- 存储生成的 Grpc 服务端和客户端服务接口 -->
+                            <goal>compile-custom</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 添加 Protobuf 生成的代码文件 -->
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/protobuf/grpc-java</source>
+                                <source>${project.build.directory}/generated-sources/protobuf/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

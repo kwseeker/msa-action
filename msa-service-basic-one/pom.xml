@@ -4,27 +4,16 @@
     <parent>
         <groupId>top.kwseeker.msa</groupId>
         <artifactId>msa-action</artifactId>
-        <version>0.0.1</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>msa-service-basic-one</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>msa-service-basic-one</name>
     <description>一个基础服务，测试整合监控、RPC调用、Swagger日志等</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>top.kwseeker.msa</groupId>
-            <artifactId>msa-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>msa-service-basic-one-api</module>
+        <module>msa-service-basic-one-app</module>
+    </modules>
 </project>

@@ -1,1 +1,4 @@
 GET http://localhost:28102/web-one/hello?name=Arvin
+
+###
+POST http://localhost:28102/web-one/order/pay?userId=10001&orderId=1&amount=100

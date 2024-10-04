@@ -66,7 +66,7 @@
 
   + [ ] GRPC
 
-  + [ ] Feign
+  + [x] Feign
 
   + [ ] Dubbo
 
@@ -74,7 +74,7 @@
 
   + [ ] ELK
 
-  + [ ] SkyWalking
+  + [x] SkyWalking
 
   + [x] Prometheus
 
