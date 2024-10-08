@@ -20,6 +20,7 @@ public class HelloController {
 
     @GetMapping("/hello")
     public Response<String> sayHello(@RequestParam("name") String name) {
+        log.info("sayHello: {}", name);
         Response<String> resp = helloApiClient.sayHello(name);
         return Response.success(resp.getData());
     }

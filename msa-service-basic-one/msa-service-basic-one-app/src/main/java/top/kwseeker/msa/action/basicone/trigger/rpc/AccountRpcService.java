@@ -1,6 +1,7 @@
 package top.kwseeker.msa.action.basicone.trigger.rpc;
 
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import org.lognet.springboot.grpc.GRpcService;
 import top.kwseeker.msa.action.basicone.api.grpc.proto.AccountServiceGrpc;
 import top.kwseeker.msa.action.basicone.api.grpc.proto.PaymentRequest;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 /**
  * 这个是胶水类，用于将 protoc 生成的 Netty 服务端（位于AccountServiceGrpc）与实际 Service 进行绑定
  */
+@Slf4j
 @GRpcService(interceptors = {GrpcServerFilter.class}) //@Service
 public class AccountRpcService extends AccountServiceGrpc.AccountServiceImplBase {
 
@@ -29,6 +31,7 @@ public class AccountRpcService extends AccountServiceGrpc.AccountServiceImplBase
         payment.setAmount(request.getAmount());
 
         PayResult pay = accountService.pay(payment);
+        log.info("pay: {}", payment);
 
         PaymentResponse response = PaymentResponse.newBuilder()
                 .setResult(pay.getCode())

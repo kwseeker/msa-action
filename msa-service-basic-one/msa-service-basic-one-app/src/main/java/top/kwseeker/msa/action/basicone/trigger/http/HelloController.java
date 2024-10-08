@@ -14,6 +14,7 @@ public class HelloController {
 
     @GetMapping("/hello")
     public Response<String> sayHello(@RequestParam("name") String name) {
+        log.info("sayHello: {}", name);
         String message = "Hello, " + name;
         return Response.success(message);
     }
