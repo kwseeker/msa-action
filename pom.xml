@@ -17,6 +17,7 @@
     <module>msa-service-mall</module>
     <module>msa-service-user</module>
     <module>msa-service-web-one</module>
+    <module>msa-service-web-bdcc</module>
     <module>msa-service-basic-one</module>
   </modules>
 

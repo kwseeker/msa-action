@@ -52,23 +52,22 @@
 
 + 计划任务
     + [ ] XXL-JOB
-
 + 分库分表
     + [ ] Sharding-JDBC
-
 + 网关
     + [ ] Nginx
     + [x] Spring Cloud Gateway
-
 + 通信
 
   + [ ] Thrift
-
-  + [ ] GRPC
-
+  + [x] GRPC
   + [x] Feign
-
   + [ ] Dubbo
+
++ 分布式协调
+
+   + [ ] Zookeeper 
+
 
 + 日志、监控、告警
 
@@ -77,19 +76,15 @@
   + [x] SkyWalking
 
   + [x] Prometheus
-
 + 测试
   + [ ] Mock
     + [ ] 第三方接口模拟
-
 + 架构模式
   + [ ] DDD
-
 + 运维
 
   + [ ] Docker-Compose
   + [ ] K8S
-
 + 三高保证
 
   + 高并发
@@ -98,7 +93,6 @@
 
   + 高可用
     + [ ] Sentinel
-
 + 文档工具
   + [ ] SpringFox Swagger2
 
@@ -118,9 +112,15 @@
 + JDK
 
   + [ ] JDK8
-+ [ ] JDK21
+  + [ ] JDK21
+
+
 
 ## 经验整合
+
++ [ ] 动态业务配置
+
+  有些业务的配置数据需要支持动态配置，比如活动可能需要配置活动开始、结束时间，活动可能涉及一些限量免费商品，需要支持动态配置商品数量等等。
 
 
 

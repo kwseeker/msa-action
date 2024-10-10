@@ -1,0 +1,18 @@
+server:
+  port: 28103
+  servlet:
+    context-path: /web-bdcc
+spring:
+  application:
+    name: msa-service-web-bdcc
+#  profiles:
+#    active: dev
+
+zookeeper:
+  curator:
+    config:
+      connect-string: localhost:22181
+      base-sleep-time-ms: 1000
+      max-retries: 3
+      session-timeout-ms: 30000
+      connection-timeout-ms: 5000

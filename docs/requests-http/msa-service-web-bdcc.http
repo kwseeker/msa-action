@@ -1,0 +1,17 @@
+POST http://localhost:28103/web-bdcc/activity
+Content-Type: application/json
+
+{
+  "enable": "1",
+  "activity": {
+    "id": "MID_AUTUMN_FESTIVAL",
+    "name": "喜迎中秋",
+    "startTime": "2023-09-01 00:00:00",
+    "endTime": "2023-09-07 23:59:59"
+  }
+}
+
+###
+GET http://localhost:28103/web-bdcc/activity/enabled
+
+###

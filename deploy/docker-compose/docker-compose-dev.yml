@@ -215,6 +215,13 @@ services:
       cluster.routing.allocation.disk.watermark.flood_stage: 98%
       xpack.security.enabled: false
       xpack.security.http.ssl.enabled: false
+    # 配置健康检查，防止依赖 ES 的容器还未等待 ES 完全启动就启动
+    # https://docs.docker.com/reference/compose-file/services/#healthcheck
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail http://localhost:9200/_cluster/health || exit 1" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
     networks:
       - msa-action-network
 
@@ -239,7 +246,9 @@ services:
     networks:
       - msa-action-network
     depends_on:
-      - msa-elasticsearch
+      # OAP总是启动异常，怀疑是ES还没完全启动OAP就启动了导致的异常，修改等待条件从默认的 service_started 改为 service_healthy
+      msa-elasticsearch:
+        condition: service_healthy
     deploy:
       resources:
         limits:
