@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
-public class ActivityManager {
+public class ZkActivityManager {
 
     private static final String ZK_BDCC_CONFIG_NODE_PATH = "/msa/bdcc/configs";
     // activities/
@@ -33,7 +33,7 @@ public class ActivityManager {
     private final Map<String, Activity> enabledActivityMap = new ConcurrentHashMap<>();
     private final CuratorFramework zkClient;
 
-    public ActivityManager(CuratorFramework zkClient) {
+    public ZkActivityManager(CuratorFramework zkClient) {
         this.zkClient = zkClient;
     }
 
@@ -87,7 +87,7 @@ public class ActivityManager {
         StringBuilder sb = new StringBuilder();
         activityMap.put(activityNodePath, activity);
         sb.append(String.format("Activity zkPath: %s content: %s is loaded", activityNodePath, activity.info()));
-        if (activitySetting.isEnabled()) {
+        if (activitySetting.isEnable()) {
             enabledActivityMap.put(activityNodePath, activity);
             sb.append(" and enabled");
         } else {
@@ -146,18 +146,18 @@ public class ActivityManager {
     /**
      * 设置活动到ZK，每个活动对应一个子节点
      */
-    public void setActivity(String activityId, ActivitySetting activitySetting) throws Exception {
+    public void setActivityNode(String activityId, ActivitySetting activitySetting) throws Exception {
         byte[] jsonBytes = JSON.toJSONBytes(activitySetting);
         checkOrCreateNode(ZKPaths.makePath(ACTIVITY_SETTINGS_NODE_PATH, activityId));
         zkClient.setData().forPath(ZKPaths.makePath(ACTIVITY_SETTINGS_NODE_PATH, activityId), jsonBytes);
     }
 
-    public ActivitySetting getActivity(String activityId) throws Exception {
+    public ActivitySetting getActivityNode(String activityId) throws Exception {
         byte[] bytes = zkClient.getData().forPath(ZKPaths.makePath(ACTIVITY_SETTINGS_NODE_PATH, activityId));
         return JSON.parseObject(bytes, ActivitySetting.class);
     }
 
-    public void deleteActivity(String activityId) throws Exception {
+    public void deleteActivityNode(String activityId) throws Exception {
         zkClient.delete().forPath(ZKPaths.makePath(ACTIVITY_SETTINGS_NODE_PATH, activityId));
     }
 

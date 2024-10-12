@@ -14,32 +14,32 @@ import java.util.List;
 public class ActivityService implements IActivityService {
 
     @Resource
-    private ActivityManager activityManager;
+    private ZkActivityManager zkActivityManager;
 
     @Override
     public void addActivity(ActivitySettingDTO activitySettingDTO) throws Exception {
         Activity activity = activitySettingDTO.getActivity();
         ActivitySetting setting = new ActivitySetting();
-        setting.setEnabled(activitySettingDTO.getEnable() == ActivityConstants.ENABLED);
+        setting.setEnable(activitySettingDTO.getEnable() == ActivityConstants.ENABLED);
         setting.setActivityJson(JSON.toJSONString(activity));
         setting.setActivityClassName(activity.getClass().getName());
-        activityManager.setActivity(activity.getId(), setting);
+        zkActivityManager.setActivityNode(activity.getId(), setting);
     }
 
     @Override
     public void deleteActivity(String activityId) throws Exception {
-        activityManager.deleteActivity(activityId);
+        zkActivityManager.deleteActivityNode(activityId);
     }
 
     @Override
     public void enableActivity(String activityId) throws Exception {
-        ActivitySetting setting = activityManager.getActivity(activityId);
-        setting.setEnabled(true);
-        activityManager.setActivity(activityId, setting);
+        ActivitySetting setting = zkActivityManager.getActivityNode(activityId);
+        setting.setEnable(true);
+        zkActivityManager.setActivityNode(activityId, setting);
     }
 
     @Override
     public List<Activity> enabledActivities() {
-        return activityManager.getEnabledActivities();
+        return zkActivityManager.getEnabledActivities();
     }
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ActivitySetting {
     // 是否启用 0不起用1启用
-    private boolean enabled;
+    private boolean enable;
     private String activityJson;
     // 活动配置的 Activity Class 实际类型，将活动配置 JSON 反序列化时用
     private String activityClassName;
