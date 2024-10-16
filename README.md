@@ -16,10 +16,9 @@
 + 认证与授权
 
   + [x] Spring Security 
-
-  + [ ] Shiro
-
-  + [ ] 安全框架平替
++ [ ] Shiro
+  + [x] JCasbin
++ [ ] 安全框架平替
 + 数据相关
 
   + [ ] Mybatis
@@ -66,7 +65,7 @@
 
 + 分布式协调
 
-   + [ ] Zookeeper 
+   + [x] Zookeeper 
 
 
 + 日志、监控、告警
@@ -112,6 +111,7 @@
 + JDK
 
   + [ ] JDK8
+  + [ ] JDK17
   + [ ] JDK21
 
 
@@ -120,13 +120,20 @@
 
 > 一些实用的功能：
 
-+ [ ] 动态配置
++ [ ] [动态配置](docs/business-solution/dynamic-configuration-support.md)
 
   案例：
 
   + 业务动态配置，比如线上配置活动开始、结束时间等等
   + 业务接口降级开关
   + 线上动态修改日志级别
+
++ [ ] [权限管理设计](docs/business-solution/permission-management-rbac-and-abac.md)
+
+  案例：
+
+  + 运营管理后台以及面向B端的产品基本都需要权限管理
+
 
 
 
