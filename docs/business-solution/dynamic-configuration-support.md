@@ -41,3 +41,43 @@
 本质和上面的原理类似，依赖 Nacos 注册与发现，Nacos 配置变更后可以通过监听客户端列表以主动推的方式发给各个服务实例。
 
 
+
+## 动态业务配置使用场景
+
++ 业务动态配置，比如线上配置活动开始、结束时间等等
+
+  参考 msa-service-web-bdcc 。
+
++ 业务接口降级开关
+
+  + Zookeeper 实现方案
+
+    业务服务本地维持一个 Manager 类用于监听 Zookeeper 中降级节点并缓存。将路由每一层拆分为一个ZNode, 每一层都可以设置是否降级。比如路由 /a/b/c , ZNode层级为：
+
+    ````
+    /a：true / false
+    	/b: true / false
+    		/c: true / false
+    ````
+
+    节点数据结构：
+
+    ```java
+    static class Node {
+        // 路由节点路径
+        private String path;
+        // 是否降级
+        private boolean degrade;
+        private boolean isLeaf;
+        // 子路由节点
+        private Map<String, Node> children;
+    }
+    ```
+
+    注册Filter、Inteceptor、AOP在请求被处理前判断从根路由开始依次判断是否被降级，直到遇到被降级直接调用对应的降级方法并返回。
+
+  + Nacos 实现方案
+
+    和 ZK 方案类似。
+
++ 线上动态修改日志级别
