@@ -267,6 +267,16 @@ services:
     depends_on:
       - msa-skywalking-oap
 
+  msa-sentinel-dashboard:
+    image: bladex/sentinel-dashboard:1.8.7
+    container_name: msa-sentinel-dashboard
+    ports:
+      - "28858:8858"
+    networks:
+      - msa-action-network
+    #depends_on:
+    #  - msa-nacos
+
 networks:
   msa-action-network:
     name: msa-action-network  # 不指定名称的话总是会将当前文件夹名作为网络名前缀

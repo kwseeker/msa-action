@@ -7,7 +7,6 @@
         <version>0.0.1</version>
     </parent>
 
-    <groupId>top.kwseeker.labs</groupId>
     <artifactId>msa-service-web-bdcc</artifactId>
     <packaging>jar</packaging>
     <name>msa-service-web-bdcc</name>

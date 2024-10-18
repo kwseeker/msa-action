@@ -1,0 +1,10 @@
+server:
+  port: 28104
+  servlet:
+    context-path: /web-ha
+spring:
+  application:
+    name: msa-service-web-ha
+  profiles:
+#    active: dev
+    active: test

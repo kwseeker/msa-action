@@ -19,6 +19,7 @@
     <module>msa-service-web-one</module>
     <module>msa-service-web-bdcc</module>
     <module>msa-service-basic-one</module>
+    <module>msa-service-web-ha</module>
   </modules>
 
   <properties>

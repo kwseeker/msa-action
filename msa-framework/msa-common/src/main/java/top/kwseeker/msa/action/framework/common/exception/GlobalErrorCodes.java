@@ -13,5 +13,8 @@ public interface GlobalErrorCodes {
     // ========== 服务端错误 ==========
 
     ErrorCode INTERNAL_SERVER_ERROR = new ErrorCode(500, "系统异常");
+
+    ErrorCode REQUEST_LIMITED_ERROR = new ErrorCode(601, "请求被拦截");
+    ErrorCode FLOW_EXCEED_ERROR = new ErrorCode(601, "系统流量异常，请稍后重试");
 }
 

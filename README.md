@@ -82,7 +82,7 @@
   + [ ] DDD
 + 运维
 
-  + [ ] Docker-Compose
+  + [x] Docker-Compose
   + [ ] K8S
 + 三高保证
 
@@ -92,6 +92,7 @@
 
   + 高可用
     + [ ] Sentinel
+    + [ ] Hystrix
 + 文档工具
   + [ ] SpringFox Swagger2
 
