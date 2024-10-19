@@ -5,6 +5,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,9 +17,19 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class DefaultBlockExceptionHandler implements BlockExceptionHandler {
 
+    @Resource
+    private WebResourceDegradationManager webResourceDegradationManager;
+
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, BlockException e) throws Exception {
-        log.warn("Flow Control: request url:{}, method:{} been limited", request.getRequestURL(), request.getMethod(), e);
+        // 先判断请求对应的降级处理器是否存在
+        BlockExceptionHandler blockHandler = webResourceDegradationManager.getBlockHandler(request);
+        if (blockHandler != null) {
+            blockHandler.handle(request, response, e);
+            return;
+        }
+
+        log.warn("Degrade: request url:{}, method:{}, with block exception: {}", request.getRequestURL(), request.getMethod(), e.getMessage());
         // 继续抛出异常后面由 GlobalExceptionHandler 处理
         throw e;
     }

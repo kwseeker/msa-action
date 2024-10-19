@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = BlockException.class)
     public Response<String> blockExceptionHandler(BlockException blockException) {
-        return Response.fail(REQUEST_LIMITED_ERROR);
+        return Response.fail(REQUEST_DEGRADE_ERROR);
     }
 
     /**
