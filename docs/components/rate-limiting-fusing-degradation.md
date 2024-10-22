@@ -56,7 +56,7 @@
 
   对资源进行参数级别更细粒度的限流控制。
 
-  这也是一种比较常用的限流规则，可以限制恶意用户的频繁访问。
+  这也是一种比较常用的限流规则，可以检测并限制恶意用户的频繁访问。
 
   ParamFlowSlot 中实现。
 
@@ -132,6 +132,20 @@ TODO。
   + 排除 `sentinel-spring-webmvc-adapter` 依赖在接口上使用 @SentinelResource 并定制降级方法
   + BlockExceptionHandler 接口方法 handle 参数包含  `HttpServletRequest request` 完全可以在 handle() 中从 request 获取 请求方式和路由，进而调用对应的降级处理。
 
-+ **自定义用户黑名单限流**
++ **自定义用户黑白名单限流**
 
-  可以参考 `AuthoritySlot` 自定义一个 `ProcessorSlot` 实现。 
+  AuthoritySlot 能否用于实现用户黑名单限流。从源码处理流程看也可以，但是不合适，AuthoritySlot 本意是通过黑白名单限制请求来源 APP，AuthorityRule 的成员字段 resource、limitApp、strategy；在请求头 origin 中放用户ID以及在 limitApp 中放被限制的用户ID都不合适，且一个AuthorityRule是针对某个资源（比如某个接口）的，用户黑名单限流规则应该支持针对所有资源。
+
+  所以需要自行实现拓展。
+
+  实现要点：
+
+  + 自定义 ProcessorSlot 以及规则、规则管理器、规则校验器、限流异常，通过Java SPI 加载并注册到 Sentinel 责任链
+  + 添加自定义规则配置的动态刷新以及配置到规则实例的转换器
+  + 在 `SentinelWebInterceptor` 前面注册一个新的拦截器，用于记录用户上下文信息，用于后面用户黑白名单校验
+
+  代码参考 Git Commit: `feat: 高可用：Sentinel拓展用户黑白单限流规则`。
+
+  
+
+  

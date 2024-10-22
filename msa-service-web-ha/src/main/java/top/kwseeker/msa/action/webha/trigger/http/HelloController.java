@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.kwseeker.msa.action.framework.common.context.UserContext;
 import top.kwseeker.msa.action.framework.common.model.Response;
+import top.kwseeker.msa.action.sentinel.context.UserContextUtil;
 import top.kwseeker.msa.action.webha.domain.ha.service.HelloService;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ public class HelloController {
 
     /**
      * 流控案例
+     * 限流后抛出 FlowException
      * 通过 {@link <a href="https://example.com/">Sentinel Dashboard</a>} 设置流控规则
      * 比如设置单机QPS阈值5，超过阈值后快速失败
      */
@@ -44,12 +47,31 @@ public class HelloController {
     /**
      * 熔断案例
      * 熔断后抛出 DegradeException
-     * 这里通过 {@link <a href="https://example.com/">Sentinel Dashboard</a>} 设置熔断规则
      * 比如设置慢调用比例超过10%或异常比例超过10%，触发熔断
      */
     @GetMapping("/fuse")
     public Response<String> testFuse(@RequestParam("name") String name) {
         log.info("testFuse: {}", name);
         return Response.success("Hello " + name);
+    }
+
+    /**
+     * 热点参数限流案例
+     * 系统自适应限流规则针对所有资源
+     */
+    @GetMapping("/hot_param")
+    public Response<String> testHotParam(@RequestParam("userId") String userId) {
+        log.info("testHotParam: {}", userId);
+        return Response.success("Hello " + userId);
+    }
+
+    /**
+     * 拓展的用户黑白名单限流规则测试
+     */
+    @GetMapping("/user_authority")
+    public Response<String> testUserAuthority() {
+        UserContext userContext = UserContextUtil.getUserContext();
+        log.info("testUserAuthority: {}", userContext);
+        return Response.success("Hello " + userContext.getUsername());
     }
 }

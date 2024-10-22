@@ -1,0 +1,6 @@
+GET http://localhost:28104/web-ha/user_authority
+Login-User: {"userId":10001, "username":"Arvin"}
+
+###
+GET http://localhost:28104/web-ha/user_authority
+Login-User: {"userId":10003, "username":"Cindy"}

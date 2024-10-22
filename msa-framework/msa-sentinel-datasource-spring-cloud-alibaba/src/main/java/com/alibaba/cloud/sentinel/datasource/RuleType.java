@@ -24,6 +24,7 @@ import com.alibaba.csp.sentinel.slots.block.degrade.DegradeRule;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
 import com.alibaba.csp.sentinel.slots.system.SystemRule;
+import top.kwseeker.msa.action.sentinel.slots.block.user.UserAuthorityRule;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -56,6 +57,10 @@ public enum RuleType {
 	 * authority.
 	 */
 	AUTHORITY("authority", AuthorityRule.class),
+	/**
+	 * user authority.
+	 */
+	USER_AUTHORITY("user-authority", UserAuthorityRule.class),
 	/**
 	 * gateway flow.
 	 */

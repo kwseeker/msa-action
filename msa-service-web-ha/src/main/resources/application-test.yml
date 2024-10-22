@@ -7,7 +7,8 @@ spring:
 #      transport:
 #        dashboard: 127.0.0.1:28858    # Sentinel 控制台地址，控制台连接业务服务
       filter:
-        url-patterns: /**             # 拦截请求的地址。默认为 /*
+        url-patterns: /**             # 拦截全部请求。默认为 /**
+        order: -2147483647            # 前面留一个空位，放 MsaSentinelWebInterceptor
       # Sentinel 规则的数据源，是一个 Map 类型。key 为数据源名，可自定义；value 为数据源的具体配置
       datasource:
         ds1:
@@ -16,6 +17,38 @@ spring:
             server-addr: 127.0.0.1:28848  # Nacos 服务器地址
             namespace:                    # Nacos 命名空间
             group-id: DEFAULT_GROUP
-            data-id: ${spring.application.name}-sentinel-rules # Nacos 配置集编号
+            data-id: ${spring.application.name}-sentinel-flow-rules # Nacos 配置集编号
             data-type: json               # 数据格式
             rule-type: FLOW               # 规则类型
+        ds2:
+          nacos:
+            server-addr: 127.0.0.1:28848
+            namespace:
+            group-id: DEFAULT_GROUP
+            data-id: ${spring.application.name}-sentinel-degrade-rules
+            data-type: json
+            rule-type: DEGRADE
+        ds3:
+          nacos:
+            server-addr: 127.0.0.1:28848
+            namespace:
+            group-id: DEFAULT_GROUP
+            data-id: ${spring.application.name}-sentinel-system-rules
+            data-type: json
+            rule-type: SYSTEM
+        ds4:
+          nacos:
+            server-addr: 127.0.0.1:28848
+            namespace:
+            group-id: DEFAULT_GROUP
+            data-id: ${spring.application.name}-sentinel-param-flow-rules
+            data-type: json
+            rule-type: PARAM_FLOW
+        ds5:
+          nacos:
+            server-addr: 127.0.0.1:28848
+            namespace:
+            group-id: DEFAULT_GROUP
+            data-id: ${spring.application.name}-sentinel-user-authority-rules
+            data-type: json
+            rule-type: USER_AUTHORITY

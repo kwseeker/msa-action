@@ -27,6 +27,7 @@ import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRuleManager;
 import com.alibaba.csp.sentinel.slots.system.SystemRuleManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.core.env.Environment;
+import top.kwseeker.msa.action.sentinel.slots.block.user.UserAuthorityRuleManager;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -112,6 +113,9 @@ public class AbstractDataSourceProperties {
 			break;
 		case AUTHORITY:
 			AuthorityRuleManager.register2Property(dataSource.getProperty());
+			break;
+		case USER_AUTHORITY:
+			UserAuthorityRuleManager.register2Property(dataSource.getProperty());
 			break;
 		case GW_FLOW:
 			GatewayRuleManager.register2Property(dataSource.getProperty());

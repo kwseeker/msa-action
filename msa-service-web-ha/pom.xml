@@ -22,16 +22,17 @@
             <groupId>top.kwseeker.msa</groupId>
             <artifactId>msa-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>top.kwseeker.msa</groupId>
+            <artifactId>msa-sentinel-spring-cloud-starter-alibaba</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
         <!-- Sentinel 对 Nacos 作为数据源的支持 -->
         <dependency>
             <groupId>com.alibaba.csp</groupId>

@@ -27,6 +27,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.kwseeker.msa.action.sentinel.slots.block.user.UserAuthorityRule;
 
 import java.io.IOException;
 import java.util.*;
@@ -63,7 +64,7 @@ public abstract class SentinelConverter<T extends Object>
 		// hard code
 		if (ruleClass == FlowRule.class || ruleClass == DegradeRule.class
 				|| ruleClass == SystemRule.class || ruleClass == AuthorityRule.class
-				|| ruleClass == ParamFlowRule.class) {
+				|| ruleClass == ParamFlowRule.class || ruleClass == UserAuthorityRule.class) {
 			ruleCollection = new ArrayList<>();
 		}
 		else {
